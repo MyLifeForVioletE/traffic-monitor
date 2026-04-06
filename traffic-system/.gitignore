@@ -1,0 +1,42 @@
+# Go cache
+.gocache/
+
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+trafficd
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# Dependency directories
+vendor/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Config
+*.yaml
+*.yml
+!*.example.yaml
+
+# Logs
+*.log
+logs/
+
+# Database
+*.db
+*.sqlite

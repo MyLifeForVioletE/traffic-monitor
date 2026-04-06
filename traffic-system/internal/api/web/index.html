@@ -1,0 +1,767 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>高速网络流量监测系统</title>
+  <style>
+    :root{
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --text:#1f2a37;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --primary:#12b3b3;
+      --primary2:#3cc7a6;
+      --warn:#f59e0b;
+      --ok:#10b981;
+      --danger:#ef4444;
+      --input-bg:#ffffff;
+      --input-border:#d1d5db;
+    }
+    *{box-sizing:border-box;}
+    body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Microsoft YaHei", sans-serif; margin: 0; background:var(--bg); color:var(--text);}
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 18px; background:var(--card); border-bottom:1px solid var(--line);
+      position:sticky; top:0; z-index:10;
+    }
+    .title{font-size:16px; font-weight:700;}
+    .sub{font-size:12px; color:var(--muted); margin-top:2px;}
+    .leftTitle{display:flex; flex-direction:column;}
+    .controls{display:flex; gap:10px; align-items:center;}
+    .pill{border:1px solid var(--line); background:#fff; border-radius:999px; padding:6px 10px; font-size:12px; color:var(--muted);}
+    .input{border:1px solid var(--line); background:#fff; border-radius:10px; padding:6px 10px; font-size:12px; width:120px;}
+    .btn{border:1px solid var(--line); background:#fff; border-radius:10px; padding:6px 10px; font-size:12px; cursor:pointer;}
+    .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;border:none;border-radius:12px;padding:14px 32px;font-size:16px;cursor:pointer;font-weight:600;box-shadow:0 4px 12px rgba(18,179,179,0.25);transition:all .3s;}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(18,179,179,0.35);}
+    .btn-primary:disabled{background:#ccc;cursor:not-allowed;transform:none;box-shadow:none;}
+
+    .config-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+    .config-full .config-card{margin-bottom:16px}
+    .config-full .config-card:last-child{margin-bottom:0}
+
+    .stats-settings{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+    .stats-item{display:flex;flex-direction:column;gap:8px;min-width:140px}
+    .stats-label{font-size:13px;font-weight:500;color:var(--text)}
+    .stats-select{padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:var(--input-bg);color:var(--text);font-size:14px;cursor:pointer;transition:all .2s}
+    .stats-select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(18,179,179,.1)}
+
+    .action-section {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .btn.primary{background:rgba(18,179,179,.12); border-color:rgba(18,179,179,.35); color:#0f766e; font-weight:600;}
+
+    .page{padding:14px 18px;}
+
+  /* 速率仪表盘 */
+  .speed-panel{display:grid; grid-template-columns: repeat(4, 1fr); gap:14px; margin-bottom:14px;}
+  .speed-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:16px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .speed-card::before{
+    content:'';
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:3px;
+    background:linear-gradient(90deg, var(--primary), var(--primary2));
+  }
+  .speed-value{
+    font-size:32px;
+    font-weight:800;
+    background:linear-gradient(135deg, var(--primary), var(--primary2));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    font-variant-numeric:tabular-nums;
+  }
+  .speed-label{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:4px;
+  }
+  .speed-unit{
+    font-size:14px;
+    font-weight:600;
+    color:var(--muted);
+    margin-left:4px;
+  }
+
+  .grid{display:grid; grid-template-columns: 1fr 0.8fr; gap:14px;}
+    .leftLists{display:grid; grid-template-rows: auto auto; gap:14px;}
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:12px;
+      box-shadow:0 1px 0 rgba(17,24,39,.02);
+    }
+    .cardHead{display:flex; align-items:center; justify-content:space-between; padding:12px 14px; border-bottom:1px solid var(--line);}
+    .cardTitle{font-weight:700; font-size:13px;}
+    .cardMeta{font-size:12px; color:var(--muted);}
+    .cardBody{padding:12px 14px;}
+
+    .tableWrap{max-height:320px; overflow:auto;}
+    table{width:100%; border-collapse:separate; border-spacing:0; font-size:12px;}
+    thead th{
+      position:sticky; top:0; background:#fbfcfe;
+      color:var(--muted); font-weight:600; text-align:left;
+      border-bottom:1px solid var(--line);
+      padding:10px 10px;
+      z-index:1;
+    }
+    tbody td{padding:10px 10px; border-bottom:1px solid #f0f2f6; vertical-align:middle;}
+    tbody tr{cursor:pointer;}
+    tbody tr:hover{background:#fbfdff;}
+    tbody tr.active{background:rgba(18,179,179,.08);}
+    .num{font-variant-numeric: tabular-nums;}
+    .badge{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:4px 8px; border-radius:999px; font-size:12px; font-weight:600;
+      border:1px solid transparent;
+    }
+    .badge.ok{background:rgba(16,185,129,.12); color:#047857; border-color:rgba(16,185,129,.25);}
+    .badge.warn{background:rgba(245,158,11,.14); color:#92400e; border-color:rgba(245,158,11,.25);}
+    .badge.danger{background:rgba(239,68,68,.12); color:#991b1b; border-color:rgba(239,68,68,.25);}
+    .muted{color:var(--muted);}
+
+    .split{display:grid; grid-template-rows: auto auto; gap:14px;}
+    #trendCurrent,#trendHistory{height:240px;}
+    .list{display:flex; flex-direction:column; gap:10px;}
+    .listRow{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:8px 10px; border:1px solid #f0f2f6; border-radius:10px;}
+    .listRow .k{font-size:12px;}
+    .listRow .v{font-size:12px; font-weight:700;}
+    .footerHint{padding:10px 14px; border-top:1px solid var(--line); color:var(--muted); font-size:12px;}
+
+    /* 网卡选择界面样式 */
+    .interface-selector {
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .config-full {
+      width: 100%;
+    }
+
+    /* 背景装饰 */
+    .interface-selector::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      left: -50px;
+      right: -50px;
+      bottom: -50px;
+      background:
+        radial-gradient(circle at 20% 80%, rgba(18, 179, 179, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(60, 199, 166, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.02) 0%, transparent 50%);
+      border-radius: 24px;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .interface-header {
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .interface-title {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--primary2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+    }
+
+    .interface-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--primary2));
+      border-radius: 2px;
+    }
+
+    .interface-subtitle {
+      font-size: 18px;
+      color: var(--muted);
+      margin-bottom: 0;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* 统计卡片区域 */
+    .stats-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--primary2));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .stat-card:hover::before {
+      opacity: 1;
+    }
+
+    .stat-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--primary), var(--primary2));
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      color: white;
+      font-size: 24px;
+      box-shadow: 0 4px 12px rgba(18, 179, 179, 0.2);
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .interface-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .interface-card {
+      background: var(--card);
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .interface-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(18, 179, 179, 0.02), rgba(60, 199, 166, 0.02));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+
+    .interface-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 12px 32px rgba(18, 179, 179, 0.15);
+      transform: translateY(-6px);
+    }
+
+    .interface-card:hover::before {
+      opacity: 1;
+    }
+
+    .interface-card.selected {
+      border-color: var(--primary);
+      background: linear-gradient(135deg, rgba(18, 179, 179, 0.08), rgba(60, 199, 166, 0.08));
+      box-shadow: 0 8px 24px rgba(18, 179, 179, 0.25);
+      transform: translateY(-4px);
+    }
+
+    .interface-card.selected::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--primary), var(--primary2));
+      border-radius: 20px 20px 0 0;
+    }
+
+    .interface-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--primary), var(--primary2));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+      color: white;
+      font-size: 18px;
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(18, 179, 179, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .interface-card:hover .interface-icon {
+      transform: scale(1.1);
+    }
+
+    .interface-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+      transition: color 0.3s ease;
+    }
+
+    .interface-card:hover .interface-name {
+      color: var(--primary);
+    }
+
+    .interface-desc {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .interface-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+
+    .interface-type {
+      font-size: 12px;
+      color: var(--muted);
+      background: rgba(18, 179, 179, 0.1);
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-weight: 500;
+    }
+
+    .interface-status-text {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .interface-status {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--ok);
+      border: 2px solid var(--card);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .interface-status::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--card);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .interface-card {
+      animation: fadeInUp 0.5s ease-out;
+    }
+
+    .stat-card {
+      animation: fadeInUp 0.5s ease-out;
+    }
+
+    .interface-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .btn-large {
+      padding: 14px 28px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 14px;
+      min-width: 160px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-large::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .btn-large:hover::before {
+      left: 100%;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--line);
+      color: var(--text);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(18, 179, 179, 0.15);
+    }
+
+    /* 帮助提示区域 */
+    .help-section {
+      margin-top: 40px;
+      padding: 24px;
+      background: linear-gradient(135deg, rgba(18, 179, 179, 0.02), rgba(60, 199, 166, 0.02));
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .help-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .help-text {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 1200px) {
+      .interface-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .interface-selector {
+        max-width: 100%;
+        padding: 0 16px;
+      }
+
+      .interface-title {
+        font-size: 24px;
+      }
+
+      .interface-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .stats-section {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .interface-actions {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .btn-large {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .interface-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="leftTitle">
+      <div class="title">流量监测系统</div>
+      <div class="sub" id="currentIfaceDesc">请选择一个网卡并进入监测页面</div>
+    </div>
+    <div class="controls">
+      <span class="pill" id="currentIfacePill" style="display:none;"></span>
+      <button class="btn primary" id="backToSelectBtn" style="display:none;">返回网卡选择</button>
+      <span class="pill" id="timeDisplay">--:--:--</span>
+    </div>
+  </div>
+
+  <div class="page" id="selectPage">
+    <div class="interface-selector">
+      <div class="interface-header">
+        <h1 class="interface-title">网络流量监测系统</h1>
+        <p class="interface-subtitle">配置抓包参数并选择网络接口开始流量分析</p>
+      </div>
+
+      <div class="stats-section">
+        <div class="stat-card">
+          <div class="stat-icon">🌐</div>
+          <div class="stat-value" id="totalInterfaces">0</div>
+          <div class="stat-label">可用网卡</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📶</div>
+          <div class="stat-value" id="activeInterfaces">0</div>
+          <div class="stat-label">活跃网卡</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-value" id="totalPackets">0</div>
+          <div class="stat-label">捕获包数</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⏱️</div>
+          <div class="stat-value" id="monitoringSessions">0</div>
+          <div class="stat-label">监测会话</div>
+        </div>
+      </div>
+
+      <div class="config-full">
+        <!-- 网卡选择 -->
+        <div class="config-card">
+          <div class="card-title">🚀 高速网络流量监测系统</div>
+          <div class="interface-grid" id="interfaceGrid">
+            <!-- 网卡选项将通过JavaScript动态生成 -->
+          </div>
+        </div>
+
+        <!-- 数据统计 -->
+        <div class="config-card">
+          <div class="card-title">📊 数据统计</div>
+          <div class="stats-settings">
+            <div class="stats-item">
+              <label for="topN" class="stats-label">Top N</label>
+              <select id="topN" class="stats-select">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20" selected>20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+            </div>
+            <div class="stats-item">
+              <label for="aggregateGranularity" class="stats-label">检测粒度 (epoch)</label>
+              <select id="aggregateGranularity" class="stats-select">
+                <option value="60">1分钟</option>
+                <option value="300">5分钟</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 操作区 -->
+      <div class="action-section">
+        <button class="btn-primary" id="startCaptureBtn" disabled>
+          开始采集
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="mainPage" style="display:none;">
+    <!-- 速率仪表盘 -->
+    <div class="speed-panel">
+      <div class="speed-card">
+        <div class="speed-value"><span id="speedPps">0</span><span class="speed-unit">PPS</span></div>
+        <div class="speed-label">每秒数据包</div>
+      </div>
+      <div class="speed-card">
+        <div class="speed-value"><span id="speedBps">0</span><span class="speed-unit">Kbps</span></div>
+        <div class="speed-label">比特速率</div>
+      </div>
+      <div class="speed-card">
+        <div class="speed-value"><span id="speedSrcs">0</span><span class="speed-unit">个</span></div>
+        <div class="speed-label">活跃源IP数</div>
+      </div>
+      <div class="speed-card">
+        <div class="speed-value"><span id="speedFlows">0</span><span class="speed-unit">个</span></div>
+        <div class="speed-label">总流数</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="leftLists">
+        <div class="card">
+          <div class="cardHead">
+            <div>
+              <div class="cardTitle" id="currentEpochTitle">当前 epoch TOP 流信息</div>
+            </div>
+          </div>
+          <div class="cardBody">
+            <div class="tableWrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width:80px;">排名</th>
+                    <th style="width:160px;">SRC IP</th>
+                    <th style="width:130px;">时间</th>
+                    <th class="num" style="width:120px;">流基数(估计)</th>
+                    <th class="num" style="width:140px;">流大小(包数)</th>
+                    <th style="width:120px;">状态</th>
+                  </tr>
+                </thead>
+                <tbody id="topSrc1min"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="cardHead">
+            <div>
+              <div class="cardTitle" id="historyTitle">历史 TOP 流信息</div>
+            </div>
+          </div>
+          <div class="cardBody">
+            <div class="tableWrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width:80px;">排名</th>
+                    <th style="width:160px;">SRC IP</th>
+                    <th style="width:130px;">时间</th>
+                    <th class="num" style="width:120px;">累计流基数(估计)</th>
+                    <th class="num" style="width:140px;">累计流大小(包数)</th>
+                    <th style="width:120px;">状态</th>
+                  </tr>
+                </thead>
+                <tbody id="topSrcAll"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="split">
+        <div class="card">
+          <div class="cardHead">
+            <div class="cardTitle">当前 epoch 趋势</div>
+            <div class="cardMeta" id="trendCurrentMeta">src: -</div>
+          </div>
+          <div class="cardBody">
+            <div id="trendCurrent"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="cardHead">
+            <div class="cardTitle">历史趋势</div>
+            <div class="cardMeta" id="trendHistoryMeta">src: -</div>
+          </div>
+          <div class="cardBody">
+            <div id="trendHistory"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>
