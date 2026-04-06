@@ -1,0 +1,21 @@
+#-----------------------------------------------------------
+# Vivado v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Tue Dec  7 22:45:14 2021
+# Process ID: 19008
+# Current directory: E:/FPGA/pcie_test_4/pcie_test_4
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent12880 E:\FPGA\pcie_test_4\pcie_test_4\pcie_test_4.xpr
+# Log file: E:/FPGA/pcie_test_4/pcie_test_4/vivado.log
+# Journal file: E:/FPGA/pcie_test_4/pcie_test_4\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project E:/FPGA/pcie_test_4/pcie_test_4/pcie_test_4.xpr
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'E:/Vivado/2019.2/data/ip'.
+open_project: Time (s): cpu = 00:00:14 ; elapsed = 00:00:07 . Memory (MB): peak = 979.863 ; gain = 320.676
+exit
+INFO: [Common 17-206] Exiting Vivado at Tue Dec  7 23:03:31 2021...
