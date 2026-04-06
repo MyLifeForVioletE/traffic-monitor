@@ -1,8 +1,0 @@
-# compile vhdl design source files
-vhdl xil_defaultlib  \
-"../../../../pcie_test_4.ip_user_files/bd/design_1/ip/design_1_util_ds_buf_0/util_ds_buf.vhd" \
-"../../../../pcie_test_4.ip_user_files/bd/design_1/ip/design_1_util_ds_buf_0/sim/design_1_util_ds_buf_0.vhd" \
-"../../../../pcie_test_4.ip_user_files/bd/design_1/ip/design_1_axi_gpio_0_0/sim/design_1_axi_gpio_0_0.vhd" \
-
-# Do not sort compile order
-nosort
