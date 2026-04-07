@@ -1,4 +1,4 @@
-# trafficd - 高速网络流量监测系统
+#高速网络流量监测系统
 
 ![Go Version](https://img.shields.io/badge/Go-1.23+-00ADD8?style=flat&logo=go)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
