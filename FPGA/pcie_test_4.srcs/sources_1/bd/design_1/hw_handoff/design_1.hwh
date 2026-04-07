@@ -1,0 +1,2722 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Mon Jul 26 16:41:35 2021" VIVADOVERSION="2019.2">
+
+  <SYSTEMINFO ARCH="artix7" DEVICE="7a100t" NAME="design_1" PACKAGE="fgg484" SPEEDGRADE="-2"/>
+
+  <EXTERNALPORTS>
+    <PORT DIR="I" NAME="pcie_rst_n" SIGIS="rst" SIGNAME="External_Ports_pcie_rst_n">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="xdma_0" PORT="sys_rst_n"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="lnk_up_led" SIGIS="undef" SIGNAME="xdma_0_user_lnk_up">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="xdma_0" PORT="user_lnk_up"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT CLKFREQUENCY="100000000" DIR="I" LEFT="0" NAME="pcie_ref_clk_p" RIGHT="0" SIGIS="clk" SIGNAME="util_ds_buf_IBUF_DS_P">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="util_ds_buf" PORT="IBUF_DS_P"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT CLKFREQUENCY="100000000" DIR="I" LEFT="0" NAME="pcie_ref_clk_n" RIGHT="0" SIGIS="clk" SIGNAME="util_ds_buf_IBUF_DS_N">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="util_ds_buf" PORT="IBUF_DS_N"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" LEFT="1" NAME="pcie_mgt_rxn" RIGHT="0" SIGIS="undef" SIGNAME="xdma_0_pci_exp_rxn">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="xdma_0" PORT="pci_exp_rxn"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" LEFT="1" NAME="pcie_mgt_rxp" RIGHT="0" SIGIS="undef" SIGNAME="xdma_0_pci_exp_rxp">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="xdma_0" PORT="pci_exp_rxp"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" LEFT="1" NAME="pcie_mgt_txn" RIGHT="0" SIGIS="undef" SIGNAME="xdma_0_pci_exp_txn">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="xdma_0" PORT="pci_exp_txn"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" LEFT="1" NAME="pcie_mgt_txp" RIGHT="0" SIGIS="undef" SIGNAME="xdma_0_pci_exp_txp">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="xdma_0" PORT="pci_exp_txp"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" LEFT="2" NAME="led_tri_o" RIGHT="0" SIGIS="undef" SIGNAME="axi_gpio_0_gpio_io_o">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="axi_gpio_0" PORT="gpio_io_o"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" LEFT="63" NAME="S_AXIS_0_tdata" RIGHT="0" SIGIS="undef" SIGNAME="axis_data_fifo_0_s_axis_tdata">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="axis_data_fifo_0" PORT="s_axis_tdata"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="S_AXIS_0_tready" SIGIS="undef" SIGNAME="axis_data_fifo_0_s_axis_tready">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="axis_data_fifo_0" PORT="s_axis_tready"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="S_AXIS_0_tvalid" SIGIS="undef" SIGNAME="axis_data_fifo_0_s_axis_tvalid">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="axis_data_fifo_0" PORT="s_axis_tvalid"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" LEFT="63" NAME="M_AXIS_0_tdata" RIGHT="0" SIGIS="undef" SIGNAME="axis_data_fifo_1_m_axis_tdata">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="axis_data_fifo_1" PORT="m_axis_tdata"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="M_AXIS_0_tready" SIGIS="undef" SIGNAME="axis_data_fifo_1_m_axis_tready">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="axis_data_fifo_1" PORT="m_axis_tready"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="M_AXIS_0_tvalid" SIGIS="undef" SIGNAME="axis_data_fifo_1_m_axis_tvalid">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="axis_data_fifo_1" PORT="m_axis_tvalid"/>
+      </CONNECTIONS>
+    </PORT>
+  </EXTERNALPORTS>
+
+  <EXTERNALINTERFACES>
+    <BUSINTERFACE BUSNAME="xdma_0_pcie_mgt" NAME="pcie_mgt" TYPE="INITIATOR">
+      <PORTMAPS>
+        <PORTMAP LOGICAL="rxn" PHYSICAL="pcie_mgt_rxn"/>
+        <PORTMAP LOGICAL="rxp" PHYSICAL="pcie_mgt_rxp"/>
+        <PORTMAP LOGICAL="txn" PHYSICAL="pcie_mgt_txn"/>
+        <PORTMAP LOGICAL="txp" PHYSICAL="pcie_mgt_txp"/>
+      </PORTMAPS>
+    </BUSINTERFACE>
+    <BUSINTERFACE BUSNAME="External_Interface_pcie_ref" NAME="pcie_ref" TYPE="TARGET">
+      <PARAMETER NAME="CAN_DEBUG" VALUE="false"/>
+      <PARAMETER NAME="FREQ_HZ" VALUE="100000000"/>
+      <PORTMAPS>
+        <PORTMAP LOGICAL="CLK_P" PHYSICAL="pcie_ref_clk_p"/>
+        <PORTMAP LOGICAL="CLK_N" PHYSICAL="pcie_ref_clk_n"/>
+      </PORTMAPS>
+    </BUSINTERFACE>
+    <BUSINTERFACE BUSNAME="axi_gpio_0_GPIO" NAME="led" TYPE="INITIATOR">
+      <PORTMAPS>
+        <PORTMAP LOGICAL="TRI_O" PHYSICAL="led_tri_o"/>
+      </PORTMAPS>
+    </BUSINTERFACE>
+    <BUSINTERFACE BUSNAME="External_Interface_S_AXIS_0" NAME="S_AXIS_0" TYPE="TARGET">
+      <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="8"/>
+      <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
+      <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
+      <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
+      <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
+      <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
+      <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
+      <PARAMETER NAME="HAS_TLAST" VALUE="0"/>
+      <PARAMETER NAME="FREQ_HZ" VALUE="125000000"/>
+      <PARAMETER NAME="PHASE" VALUE="0.000"/>
+      <PARAMETER NAME="CLK_DOMAIN"/>
+      <PARAMETER NAME="LAYERED_METADATA" VALUE="undef"/>
+      <PARAMETER NAME="INSERT_VIP" VALUE="0"/>
+      <PORTMAPS>
+        <PORTMAP LOGICAL="TDATA" PHYSICAL="S_AXIS_0_tdata"/>
+        <PORTMAP LOGICAL="TREADY" PHYSICAL="S_AXIS_0_tready"/>
+        <PORTMAP LOGICAL="TVALID" PHYSICAL="S_AXIS_0_tvalid"/>
+      </PORTMAPS>
+    </BUSINTERFACE>
+    <BUSINTERFACE BUSNAME="axis_data_fifo_1_M_AXIS" NAME="M_AXIS_0" TYPE="INITIATOR">
+      <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="8"/>
+      <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
+      <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
+      <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
+      <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
+      <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
+      <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
+      <PARAMETER NAME="HAS_TLAST" VALUE="0"/>
+      <PARAMETER NAME="FREQ_HZ" VALUE="125000000"/>
+      <PARAMETER NAME="PHASE" VALUE="0.000"/>
+      <PARAMETER NAME="CLK_DOMAIN"/>
+      <PARAMETER NAME="LAYERED_METADATA" VALUE="undef"/>
+      <PARAMETER NAME="INSERT_VIP" VALUE="0"/>
+      <PORTMAPS>
+        <PORTMAP LOGICAL="TDATA" PHYSICAL="M_AXIS_0_tdata"/>
+        <PORTMAP LOGICAL="TREADY" PHYSICAL="M_AXIS_0_tready"/>
+        <PORTMAP LOGICAL="TVALID" PHYSICAL="M_AXIS_0_tvalid"/>
+      </PORTMAPS>
+    </BUSINTERFACE>
+  </EXTERNALINTERFACES>
+
+  <MODULES>
+    <MODULE COREREVISION="22" FULLNAME="/axi_gpio_0" HWVERSION="2.0" INSTANCE="axi_gpio_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="axi_gpio" VLNV="xilinx.com:ip:axi_gpio:2.0">
+      <DOCUMENTS>
+        <DOCUMENT SOURCE="http://www.xilinx.com/cgi-bin/docs/ipdoc?c=axi_gpio;v=v2_0;d=pg144-axi-gpio.pdf"/>
+      </DOCUMENTS>
+      <PARAMETERS>
+        <PARAMETER NAME="C_FAMILY" VALUE="artix7"/>
+        <PARAMETER NAME="C_S_AXI_ADDR_WIDTH" VALUE="9"/>
+        <PARAMETER NAME="C_S_AXI_DATA_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="C_GPIO_WIDTH" VALUE="3"/>
+        <PARAMETER NAME="C_GPIO2_WIDTH" VALUE="4"/>
+        <PARAMETER NAME="C_ALL_INPUTS" VALUE="0"/>
+        <PARAMETER NAME="C_ALL_INPUTS_2" VALUE="1"/>
+        <PARAMETER NAME="C_ALL_OUTPUTS" VALUE="1"/>
+        <PARAMETER NAME="C_ALL_OUTPUTS_2" VALUE="0"/>
+        <PARAMETER NAME="C_INTERRUPT_PRESENT" VALUE="1"/>
+        <PARAMETER NAME="C_DOUT_DEFAULT" VALUE="0x00000000"/>
+        <PARAMETER NAME="C_TRI_DEFAULT" VALUE="0xFFFFFFFF"/>
+        <PARAMETER NAME="C_IS_DUAL" VALUE="0"/>
+        <PARAMETER NAME="C_DOUT_DEFAULT_2" VALUE="0x00000000"/>
+        <PARAMETER NAME="C_TRI_DEFAULT_2" VALUE="0xFFFFFFFF"/>
+        <PARAMETER NAME="Component_Name" VALUE="design_1_axi_gpio_0_0"/>
+        <PARAMETER NAME="USE_BOARD_FLOW" VALUE="false"/>
+        <PARAMETER NAME="GPIO_BOARD_INTERFACE" VALUE="Custom"/>
+        <PARAMETER NAME="GPIO2_BOARD_INTERFACE" VALUE="Custom"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+        <PARAMETER NAME="C_BASEADDR" VALUE="0x40000000"/>
+        <PARAMETER NAME="C_HIGHADDR" VALUE="0x4000FFFF"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT CLKFREQUENCY="125000000" DIR="I" NAME="s_axi_aclk" SIGIS="clk" SIGNAME="xdma_0_axi_aclk">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="axi_aclk"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_aresetn" SIGIS="rst" SIGNAME="xdma_0_axi_aresetn">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="axi_aresetn"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="8" NAME="s_axi_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_awaddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="M00_AXI_awaddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_awvalid" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_awvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="M00_AXI_awvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_awready" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_awready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="M00_AXI_awready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="31" NAME="s_axi_wdata" RIGHT="0" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_wdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="M00_AXI_wdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="3" NAME="s_axi_wstrb" RIGHT="0" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_wstrb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="M00_AXI_wstrb"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_wvalid" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_wvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="M00_AXI_wvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_wready" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_wready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="M00_AXI_wready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="1" NAME="s_axi_bresp" RIGHT="0" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_bresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="M00_AXI_bresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_bvalid" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_bvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="M00_AXI_bvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_bready" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_bready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="M00_AXI_bready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="8" NAME="s_axi_araddr" RIGHT="0" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_araddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="M00_AXI_araddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_arvalid" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_arvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="M00_AXI_arvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_arready" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_arready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="M00_AXI_arready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="s_axi_rdata" RIGHT="0" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_rdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="M00_AXI_rdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="1" NAME="s_axi_rresp" RIGHT="0" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_rresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="M00_AXI_rresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axi_rvalid" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_rvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="M00_AXI_rvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axi_rready" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_rready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="M00_AXI_rready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="ip2intc_irpt" SENSITIVITY="LEVEL_HIGH" SIGIS="INTERRUPT"/>
+        <PORT DIR="O" LEFT="2" NAME="gpio_io_o" RIGHT="0" SIGIS="undef" SIGNAME="axi_gpio_0_gpio_io_o">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="design_1_imp" PORT="led_tri_o"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES>
+        <BUSINTERFACE BUSNAME="axi_interconnect_0_M00_AXI" DATAWIDTH="32" NAME="S_AXI" TYPE="SLAVE" VLNV="xilinx.com:interface:aximm:1.0">
+          <PARAMETER NAME="DATA_WIDTH" VALUE="32"/>
+          <PARAMETER NAME="PROTOCOL" VALUE="AXI4LITE"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="125000000"/>
+          <PARAMETER NAME="ID_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="ADDR_WIDTH" VALUE="9"/>
+          <PARAMETER NAME="AWUSER_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="ARUSER_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="WUSER_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="RUSER_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="BUSER_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="READ_WRITE_MODE" VALUE="READ_WRITE"/>
+          <PARAMETER NAME="HAS_BURST" VALUE="0"/>
+          <PARAMETER NAME="HAS_LOCK" VALUE="0"/>
+          <PARAMETER NAME="HAS_PROT" VALUE="0"/>
+          <PARAMETER NAME="HAS_CACHE" VALUE="0"/>
+          <PARAMETER NAME="HAS_QOS" VALUE="0"/>
+          <PARAMETER NAME="HAS_REGION" VALUE="0"/>
+          <PARAMETER NAME="HAS_WSTRB" VALUE="1"/>
+          <PARAMETER NAME="HAS_BRESP" VALUE="1"/>
+          <PARAMETER NAME="HAS_RRESP" VALUE="1"/>
+          <PARAMETER NAME="SUPPORTS_NARROW_BURST" VALUE="0"/>
+          <PARAMETER NAME="NUM_READ_OUTSTANDING" VALUE="1"/>
+          <PARAMETER NAME="NUM_WRITE_OUTSTANDING" VALUE="1"/>
+          <PARAMETER NAME="MAX_BURST_LENGTH" VALUE="1"/>
+          <PARAMETER NAME="PHASE" VALUE="0.000"/>
+          <PARAMETER NAME="CLK_DOMAIN" VALUE="design_1_xdma_0_0_axi_aclk"/>
+          <PARAMETER NAME="NUM_READ_THREADS" VALUE="1"/>
+          <PARAMETER NAME="NUM_WRITE_THREADS" VALUE="1"/>
+          <PARAMETER NAME="RUSER_BITS_PER_BYTE" VALUE="0"/>
+          <PARAMETER NAME="WUSER_BITS_PER_BYTE" VALUE="0"/>
+          <PARAMETER NAME="INSERT_VIP" VALUE="0"/>
+          <PORTMAPS>
+            <PORTMAP LOGICAL="ARADDR" PHYSICAL="s_axi_araddr"/>
+            <PORTMAP LOGICAL="ARREADY" PHYSICAL="s_axi_arready"/>
+            <PORTMAP LOGICAL="ARVALID" PHYSICAL="s_axi_arvalid"/>
+            <PORTMAP LOGICAL="AWADDR" PHYSICAL="s_axi_awaddr"/>
+            <PORTMAP LOGICAL="AWREADY" PHYSICAL="s_axi_awready"/>
+            <PORTMAP LOGICAL="AWVALID" PHYSICAL="s_axi_awvalid"/>
+            <PORTMAP LOGICAL="BREADY" PHYSICAL="s_axi_bready"/>
+            <PORTMAP LOGICAL="BRESP" PHYSICAL="s_axi_bresp"/>
+            <PORTMAP LOGICAL="BVALID" PHYSICAL="s_axi_bvalid"/>
+            <PORTMAP LOGICAL="RDATA" PHYSICAL="s_axi_rdata"/>
+            <PORTMAP LOGICAL="RREADY" PHYSICAL="s_axi_rready"/>
+            <PORTMAP LOGICAL="RRESP" PHYSICAL="s_axi_rresp"/>
+            <PORTMAP LOGICAL="RVALID" PHYSICAL="s_axi_rvalid"/>
+            <PORTMAP LOGICAL="WDATA" PHYSICAL="s_axi_wdata"/>
+            <PORTMAP LOGICAL="WREADY" PHYSICAL="s_axi_wready"/>
+            <PORTMAP LOGICAL="WSTRB" PHYSICAL="s_axi_wstrb"/>
+            <PORTMAP LOGICAL="WVALID" PHYSICAL="s_axi_wvalid"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+        <BUSINTERFACE BUSNAME="axi_gpio_0_GPIO" NAME="GPIO" TYPE="INITIATOR" VLNV="xilinx.com:interface:gpio:1.0">
+          <PORTMAPS>
+            <PORTMAP LOGICAL="TRI_O" PHYSICAL="gpio_io_o"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+      </BUSINTERFACES>
+    </MODULE>
+    <MODULE COREREVISION="21" FULLNAME="/axi_interconnect_0" HWVERSION="2.1" INSTANCE="axi_interconnect_0" IPTYPE="BUS" IS_ENABLE="1" MODCLASS="BUS" MODTYPE="axi_interconnect" VLNV="xilinx.com:ip:axi_interconnect:2.1">
+      <DOCUMENTS>
+        <DOCUMENT SOURCE="http://www.xilinx.com/cgi-bin/docs/ipdoc?c=axi_interconnect;v=v2_1;d=pg059-axi-interconnect.pdf"/>
+      </DOCUMENTS>
+      <PARAMETERS>
+        <PARAMETER NAME="NUM_SI" VALUE="1"/>
+        <PARAMETER NAME="NUM_MI" VALUE="1"/>
+        <PARAMETER NAME="STRATEGY" VALUE="0"/>
+        <PARAMETER NAME="ENABLE_ADVANCED_OPTIONS" VALUE="0"/>
+        <PARAMETER NAME="ENABLE_PROTOCOL_CHECKERS" VALUE="0"/>
+        <PARAMETER NAME="XBAR_DATA_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="PCHK_WAITS" VALUE="0"/>
+        <PARAMETER NAME="PCHK_MAX_RD_BURSTS" VALUE="2"/>
+        <PARAMETER NAME="PCHK_MAX_WR_BURSTS" VALUE="2"/>
+        <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
+        <PARAMETER NAME="M00_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M01_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M02_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M03_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M04_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M05_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M06_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M07_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M08_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M09_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M10_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M11_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M12_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M13_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M14_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M15_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M16_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M17_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M18_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M19_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M20_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M21_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M22_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M23_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M24_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M25_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M26_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M27_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M28_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M29_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M30_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M31_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M32_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M33_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M34_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M35_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M36_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M37_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M38_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M39_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M40_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M41_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M42_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M43_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M44_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M45_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M46_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M47_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M48_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M49_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M50_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M51_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M52_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M53_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M54_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M55_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M56_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M57_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M58_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M59_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M60_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M61_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M62_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M63_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="M00_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M01_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M02_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M03_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M04_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M05_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M06_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M07_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M08_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M09_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M10_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M11_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M12_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M13_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M14_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M15_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M16_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M17_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M18_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M19_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M20_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M21_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M22_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M23_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M24_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M25_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M26_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M27_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M28_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M29_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M30_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M31_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M32_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M33_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M34_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M35_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M36_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M37_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M38_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M39_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M40_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M41_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M42_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M43_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M44_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M45_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M46_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M47_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M48_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M49_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M50_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M51_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M52_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M53_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M54_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M55_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M56_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M57_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M58_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M59_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M60_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M61_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M62_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M63_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="S00_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="S01_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="S02_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="S03_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="S04_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="S05_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="S06_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="S07_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="S08_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="S09_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="S10_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="S11_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="S12_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="S13_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="S14_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="S15_HAS_REGSLICE" VALUE="0"/>
+        <PARAMETER NAME="S00_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="S01_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="S02_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="S03_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="S04_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="S05_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="S06_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="S07_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="S08_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="S09_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="S10_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="S11_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="S12_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="S13_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="S14_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="S15_HAS_DATA_FIFO" VALUE="0"/>
+        <PARAMETER NAME="M00_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M01_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M02_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M03_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M04_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M05_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M06_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M07_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M08_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M09_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M10_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M11_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M12_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M13_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M14_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M15_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M16_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M17_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M18_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M19_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M20_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M21_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M22_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M23_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M24_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M25_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M26_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M27_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M28_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M29_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M30_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M31_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M32_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M33_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M34_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M35_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M36_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M37_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M38_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M39_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M40_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M41_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M42_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M43_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M44_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M45_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M46_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M47_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M48_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M49_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M50_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M51_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M52_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M53_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M54_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M55_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M56_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M57_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M58_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M59_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M60_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M61_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M62_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M63_ISSUANCE" VALUE="0"/>
+        <PARAMETER NAME="M00_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M01_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M02_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M03_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M04_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M05_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M06_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M07_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M08_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M09_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M10_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M11_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M12_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M13_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M14_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M15_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M16_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M17_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M18_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M19_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M20_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M21_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M22_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M23_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M24_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M25_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M26_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M27_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M28_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M29_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M30_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M31_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M32_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M33_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M34_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M35_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M36_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M37_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M38_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M39_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M40_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M41_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M42_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M43_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M44_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M45_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M46_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M47_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M48_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M49_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M50_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M51_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M52_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M53_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M54_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M55_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M56_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M57_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M58_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M59_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M60_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M61_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M62_SECURE" VALUE="0"/>
+        <PARAMETER NAME="M63_SECURE" VALUE="0"/>
+        <PARAMETER NAME="S00_ARB_PRIORITY" VALUE="0"/>
+        <PARAMETER NAME="S01_ARB_PRIORITY" VALUE="0"/>
+        <PARAMETER NAME="S02_ARB_PRIORITY" VALUE="0"/>
+        <PARAMETER NAME="S03_ARB_PRIORITY" VALUE="0"/>
+        <PARAMETER NAME="S04_ARB_PRIORITY" VALUE="0"/>
+        <PARAMETER NAME="S05_ARB_PRIORITY" VALUE="0"/>
+        <PARAMETER NAME="S06_ARB_PRIORITY" VALUE="0"/>
+        <PARAMETER NAME="S07_ARB_PRIORITY" VALUE="0"/>
+        <PARAMETER NAME="S08_ARB_PRIORITY" VALUE="0"/>
+        <PARAMETER NAME="S09_ARB_PRIORITY" VALUE="0"/>
+        <PARAMETER NAME="S10_ARB_PRIORITY" VALUE="0"/>
+        <PARAMETER NAME="S11_ARB_PRIORITY" VALUE="0"/>
+        <PARAMETER NAME="S12_ARB_PRIORITY" VALUE="0"/>
+        <PARAMETER NAME="S13_ARB_PRIORITY" VALUE="0"/>
+        <PARAMETER NAME="S14_ARB_PRIORITY" VALUE="0"/>
+        <PARAMETER NAME="S15_ARB_PRIORITY" VALUE="0"/>
+        <PARAMETER NAME="Component_Name" VALUE="design_1_axi_interconnect_0_0"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="ACLK" SIGIS="clk" SIGNAME="xdma_0_axi_aclk">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="axi_aclk"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="ARESETN" SIGIS="rst" SIGNAME="xdma_0_axi_aresetn">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="axi_aresetn"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="S00_ACLK" SIGIS="clk" SIGNAME="xdma_0_axi_aclk">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="axi_aclk"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="S00_ARESETN" SIGIS="rst" SIGNAME="xdma_0_axi_aresetn">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="axi_aresetn"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M00_ACLK" SIGIS="clk" SIGNAME="xdma_0_axi_aclk">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="axi_aclk"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M00_ARESETN" SIGIS="rst" SIGNAME="xdma_0_axi_aresetn">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="axi_aresetn"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="M00_AXI_araddr" RIGHT="0" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_araddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_araddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M00_AXI_arready" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_arready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_arready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M00_AXI_arvalid" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_arvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_arvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="M00_AXI_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_awaddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_awaddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M00_AXI_awready" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_awready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_awready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M00_AXI_awvalid" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_awvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_awvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M00_AXI_bready" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_bready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_bready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="1" NAME="M00_AXI_bresp" RIGHT="0" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_bresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_bresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M00_AXI_bvalid" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_bvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_bvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="31" NAME="M00_AXI_rdata" RIGHT="0" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_rdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_rdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M00_AXI_rready" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_rready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_rready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="1" NAME="M00_AXI_rresp" RIGHT="0" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_rresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_rresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M00_AXI_rvalid" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_rvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_rvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="M00_AXI_wdata" RIGHT="0" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_wdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_wdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M00_AXI_wready" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_wready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_wready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="3" NAME="M00_AXI_wstrb" RIGHT="0" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_wstrb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_wstrb"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M00_AXI_wvalid" SIGIS="undef" SIGNAME="axi_gpio_0_s_axi_wvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_wvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="31" NAME="S00_AXI_araddr" RIGHT="0" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_araddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axil_araddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="S00_AXI_arready" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_arready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axil_arready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="S00_AXI_arvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_arvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axil_arvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="31" NAME="S00_AXI_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_awaddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axil_awaddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="S00_AXI_awready" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_awready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axil_awready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="S00_AXI_awvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_awvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axil_awvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="S00_AXI_bready" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_bready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axil_bready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="1" NAME="S00_AXI_bresp" RIGHT="0" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_bresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axil_bresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="S00_AXI_bvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_bvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axil_bvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="S00_AXI_rdata" RIGHT="0" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_rdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axil_rdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="S00_AXI_rready" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_rready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axil_rready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="1" NAME="S00_AXI_rresp" RIGHT="0" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_rresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axil_rresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="S00_AXI_rvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_rvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axil_rvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="31" NAME="S00_AXI_wdata" RIGHT="0" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_wdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axil_wdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="S00_AXI_wready" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_wready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axil_wready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="3" NAME="S00_AXI_wstrb" RIGHT="0" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_wstrb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axil_wstrb"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="S00_AXI_wvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_wvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axil_wvalid"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES>
+        <BUSINTERFACE BUSNAME="xdma_0_M_AXI_LITE" DATAWIDTH="32" NAME="S00_AXI" TYPE="SLAVE" VLNV="xilinx.com:interface:aximm:1.0">
+          <PORTMAPS>
+            <PORTMAP LOGICAL="ARADDR" PHYSICAL="S00_AXI_araddr"/>
+            <PORTMAP LOGICAL="ARREADY" PHYSICAL="S00_AXI_arready"/>
+            <PORTMAP LOGICAL="ARVALID" PHYSICAL="S00_AXI_arvalid"/>
+            <PORTMAP LOGICAL="AWADDR" PHYSICAL="S00_AXI_awaddr"/>
+            <PORTMAP LOGICAL="AWREADY" PHYSICAL="S00_AXI_awready"/>
+            <PORTMAP LOGICAL="AWVALID" PHYSICAL="S00_AXI_awvalid"/>
+            <PORTMAP LOGICAL="BREADY" PHYSICAL="S00_AXI_bready"/>
+            <PORTMAP LOGICAL="BRESP" PHYSICAL="S00_AXI_bresp"/>
+            <PORTMAP LOGICAL="BVALID" PHYSICAL="S00_AXI_bvalid"/>
+            <PORTMAP LOGICAL="RDATA" PHYSICAL="S00_AXI_rdata"/>
+            <PORTMAP LOGICAL="RREADY" PHYSICAL="S00_AXI_rready"/>
+            <PORTMAP LOGICAL="RRESP" PHYSICAL="S00_AXI_rresp"/>
+            <PORTMAP LOGICAL="RVALID" PHYSICAL="S00_AXI_rvalid"/>
+            <PORTMAP LOGICAL="WDATA" PHYSICAL="S00_AXI_wdata"/>
+            <PORTMAP LOGICAL="WREADY" PHYSICAL="S00_AXI_wready"/>
+            <PORTMAP LOGICAL="WSTRB" PHYSICAL="S00_AXI_wstrb"/>
+            <PORTMAP LOGICAL="WVALID" PHYSICAL="S00_AXI_wvalid"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+        <BUSINTERFACE BUSNAME="axi_interconnect_0_M00_AXI" DATAWIDTH="32" NAME="M00_AXI" TYPE="MASTER" VLNV="xilinx.com:interface:aximm:1.0">
+          <PORTMAPS>
+            <PORTMAP LOGICAL="ARADDR" PHYSICAL="M00_AXI_araddr"/>
+            <PORTMAP LOGICAL="ARREADY" PHYSICAL="M00_AXI_arready"/>
+            <PORTMAP LOGICAL="ARVALID" PHYSICAL="M00_AXI_arvalid"/>
+            <PORTMAP LOGICAL="AWADDR" PHYSICAL="M00_AXI_awaddr"/>
+            <PORTMAP LOGICAL="AWREADY" PHYSICAL="M00_AXI_awready"/>
+            <PORTMAP LOGICAL="AWVALID" PHYSICAL="M00_AXI_awvalid"/>
+            <PORTMAP LOGICAL="BREADY" PHYSICAL="M00_AXI_bready"/>
+            <PORTMAP LOGICAL="BRESP" PHYSICAL="M00_AXI_bresp"/>
+            <PORTMAP LOGICAL="BVALID" PHYSICAL="M00_AXI_bvalid"/>
+            <PORTMAP LOGICAL="RDATA" PHYSICAL="M00_AXI_rdata"/>
+            <PORTMAP LOGICAL="RREADY" PHYSICAL="M00_AXI_rready"/>
+            <PORTMAP LOGICAL="RRESP" PHYSICAL="M00_AXI_rresp"/>
+            <PORTMAP LOGICAL="RVALID" PHYSICAL="M00_AXI_rvalid"/>
+            <PORTMAP LOGICAL="WDATA" PHYSICAL="M00_AXI_wdata"/>
+            <PORTMAP LOGICAL="WREADY" PHYSICAL="M00_AXI_wready"/>
+            <PORTMAP LOGICAL="WSTRB" PHYSICAL="M00_AXI_wstrb"/>
+            <PORTMAP LOGICAL="WVALID" PHYSICAL="M00_AXI_wvalid"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+      </BUSINTERFACES>
+    </MODULE>
+    <MODULE COREREVISION="2" FULLNAME="/axis_data_fifo_0" HWVERSION="2.0" INSTANCE="axis_data_fifo_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="axis_data_fifo" VLNV="xilinx.com:ip:axis_data_fifo:2.0">
+      <DOCUMENTS>
+        <DOCUMENT SOURCE="https://www.xilinx.com/cgi-bin/docs/ipdoc?c=axis_data_fifo;v=v2_0;d=pg085-axi4stream-infrastructure.pdf"/>
+      </DOCUMENTS>
+      <PARAMETERS>
+        <PARAMETER NAME="C_FAMILY" VALUE="artix7"/>
+        <PARAMETER NAME="C_AXIS_TDATA_WIDTH" VALUE="64"/>
+        <PARAMETER NAME="C_AXIS_TID_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXIS_TDEST_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXIS_TUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXIS_SIGNAL_SET" VALUE="0b00000000000000000000000000000011"/>
+        <PARAMETER NAME="C_FIFO_DEPTH" VALUE="16384"/>
+        <PARAMETER NAME="C_FIFO_MODE" VALUE="1"/>
+        <PARAMETER NAME="C_IS_ACLK_ASYNC" VALUE="0"/>
+        <PARAMETER NAME="C_SYNCHRONIZER_STAGE" VALUE="3"/>
+        <PARAMETER NAME="C_ACLKEN_CONV_MODE" VALUE="0"/>
+        <PARAMETER NAME="C_ECC_MODE" VALUE="0"/>
+        <PARAMETER NAME="C_FIFO_MEMORY_TYPE" VALUE="auto"/>
+        <PARAMETER NAME="C_USE_ADV_FEATURES" VALUE="825241648"/>
+        <PARAMETER NAME="C_PROG_EMPTY_THRESH" VALUE="5"/>
+        <PARAMETER NAME="C_PROG_FULL_THRESH" VALUE="11"/>
+        <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="8"/>
+        <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="FIFO_DEPTH" VALUE="16384"/>
+        <PARAMETER NAME="FIFO_MODE" VALUE="1"/>
+        <PARAMETER NAME="IS_ACLK_ASYNC" VALUE="0"/>
+        <PARAMETER NAME="ACLKEN_CONV_MODE" VALUE="0"/>
+        <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
+        <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
+        <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
+        <PARAMETER NAME="HAS_TLAST" VALUE="0"/>
+        <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
+        <PARAMETER NAME="HAS_WR_DATA_COUNT" VALUE="0"/>
+        <PARAMETER NAME="HAS_RD_DATA_COUNT" VALUE="0"/>
+        <PARAMETER NAME="HAS_AEMPTY" VALUE="0"/>
+        <PARAMETER NAME="HAS_PROG_EMPTY" VALUE="0"/>
+        <PARAMETER NAME="PROG_EMPTY_THRESH" VALUE="5"/>
+        <PARAMETER NAME="HAS_AFULL" VALUE="0"/>
+        <PARAMETER NAME="HAS_PROG_FULL" VALUE="0"/>
+        <PARAMETER NAME="PROG_FULL_THRESH" VALUE="11"/>
+        <PARAMETER NAME="ENABLE_ECC" VALUE="0"/>
+        <PARAMETER NAME="HAS_ECC_ERR_INJECT" VALUE="0"/>
+        <PARAMETER NAME="FIFO_MEMORY_TYPE" VALUE="auto"/>
+        <PARAMETER NAME="Component_Name" VALUE="design_1_axis_data_fifo_0_0"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="s_axis_aresetn" SIGIS="rst" SIGNAME="xdma_0_axi_aresetn">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="axi_aresetn"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT CLKFREQUENCY="125000000" DIR="I" NAME="s_axis_aclk" SIGIS="clk" SIGNAME="xdma_0_axi_aclk">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="axi_aclk"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axis_tvalid" SIGIS="undef" SIGNAME="axis_data_fifo_0_s_axis_tvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="design_1_imp" PORT="S_AXIS_0_tvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axis_tready" SIGIS="undef" SIGNAME="axis_data_fifo_0_s_axis_tready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="design_1_imp" PORT="S_AXIS_0_tready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="63" NAME="s_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="axis_data_fifo_0_s_axis_tdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="design_1_imp" PORT="S_AXIS_0_tdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axis_tvalid" SIGIS="undef" SIGNAME="axis_data_fifo_0_m_axis_tvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="s_axis_c2h_tvalid_0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axis_tready" SIGIS="undef" SIGNAME="axis_data_fifo_0_m_axis_tready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="s_axis_c2h_tready_0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="63" NAME="m_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="axis_data_fifo_0_m_axis_tdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="s_axis_c2h_tdata_0"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES>
+        <BUSINTERFACE BUSNAME="External_Interface_S_AXIS_0" NAME="S_AXIS" TYPE="TARGET" VLNV="xilinx.com:interface:axis:1.0">
+          <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="8"/>
+          <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
+          <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
+          <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
+          <PARAMETER NAME="HAS_TLAST" VALUE="0"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="125000000"/>
+          <PARAMETER NAME="PHASE" VALUE="0.000"/>
+          <PARAMETER NAME="CLK_DOMAIN" VALUE="design_1_xdma_0_0_axi_aclk"/>
+          <PARAMETER NAME="LAYERED_METADATA" VALUE="undef"/>
+          <PARAMETER NAME="INSERT_VIP" VALUE="0"/>
+          <PORTMAPS>
+            <PORTMAP LOGICAL="TDATA" PHYSICAL="s_axis_tdata"/>
+            <PORTMAP LOGICAL="TREADY" PHYSICAL="s_axis_tready"/>
+            <PORTMAP LOGICAL="TVALID" PHYSICAL="s_axis_tvalid"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+        <BUSINTERFACE BUSNAME="axis_data_fifo_0_M_AXIS" NAME="M_AXIS" TYPE="INITIATOR" VLNV="xilinx.com:interface:axis:1.0">
+          <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="8"/>
+          <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
+          <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
+          <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
+          <PARAMETER NAME="HAS_TLAST" VALUE="0"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="125000000"/>
+          <PARAMETER NAME="PHASE" VALUE="0.000"/>
+          <PARAMETER NAME="CLK_DOMAIN" VALUE="design_1_xdma_0_0_axi_aclk"/>
+          <PARAMETER NAME="LAYERED_METADATA" VALUE="undef"/>
+          <PARAMETER NAME="INSERT_VIP" VALUE="0"/>
+          <PORTMAPS>
+            <PORTMAP LOGICAL="TDATA" PHYSICAL="m_axis_tdata"/>
+            <PORTMAP LOGICAL="TREADY" PHYSICAL="m_axis_tready"/>
+            <PORTMAP LOGICAL="TVALID" PHYSICAL="m_axis_tvalid"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+      </BUSINTERFACES>
+    </MODULE>
+    <MODULE COREREVISION="2" FULLNAME="/axis_data_fifo_1" HWVERSION="2.0" INSTANCE="axis_data_fifo_1" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="axis_data_fifo" VLNV="xilinx.com:ip:axis_data_fifo:2.0">
+      <DOCUMENTS>
+        <DOCUMENT SOURCE="https://www.xilinx.com/cgi-bin/docs/ipdoc?c=axis_data_fifo;v=v2_0;d=pg085-axi4stream-infrastructure.pdf"/>
+      </DOCUMENTS>
+      <PARAMETERS>
+        <PARAMETER NAME="C_FAMILY" VALUE="artix7"/>
+        <PARAMETER NAME="C_AXIS_TDATA_WIDTH" VALUE="64"/>
+        <PARAMETER NAME="C_AXIS_TID_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXIS_TDEST_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXIS_TUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXIS_SIGNAL_SET" VALUE="0b00000000000000000000000000000011"/>
+        <PARAMETER NAME="C_FIFO_DEPTH" VALUE="16384"/>
+        <PARAMETER NAME="C_FIFO_MODE" VALUE="1"/>
+        <PARAMETER NAME="C_IS_ACLK_ASYNC" VALUE="0"/>
+        <PARAMETER NAME="C_SYNCHRONIZER_STAGE" VALUE="3"/>
+        <PARAMETER NAME="C_ACLKEN_CONV_MODE" VALUE="0"/>
+        <PARAMETER NAME="C_ECC_MODE" VALUE="0"/>
+        <PARAMETER NAME="C_FIFO_MEMORY_TYPE" VALUE="auto"/>
+        <PARAMETER NAME="C_USE_ADV_FEATURES" VALUE="825241648"/>
+        <PARAMETER NAME="C_PROG_EMPTY_THRESH" VALUE="5"/>
+        <PARAMETER NAME="C_PROG_FULL_THRESH" VALUE="11"/>
+        <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="8"/>
+        <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="FIFO_DEPTH" VALUE="16384"/>
+        <PARAMETER NAME="FIFO_MODE" VALUE="1"/>
+        <PARAMETER NAME="IS_ACLK_ASYNC" VALUE="0"/>
+        <PARAMETER NAME="ACLKEN_CONV_MODE" VALUE="0"/>
+        <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
+        <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
+        <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
+        <PARAMETER NAME="HAS_TLAST" VALUE="0"/>
+        <PARAMETER NAME="SYNCHRONIZATION_STAGES" VALUE="3"/>
+        <PARAMETER NAME="HAS_WR_DATA_COUNT" VALUE="0"/>
+        <PARAMETER NAME="HAS_RD_DATA_COUNT" VALUE="0"/>
+        <PARAMETER NAME="HAS_AEMPTY" VALUE="0"/>
+        <PARAMETER NAME="HAS_PROG_EMPTY" VALUE="0"/>
+        <PARAMETER NAME="PROG_EMPTY_THRESH" VALUE="5"/>
+        <PARAMETER NAME="HAS_AFULL" VALUE="0"/>
+        <PARAMETER NAME="HAS_PROG_FULL" VALUE="0"/>
+        <PARAMETER NAME="PROG_FULL_THRESH" VALUE="11"/>
+        <PARAMETER NAME="ENABLE_ECC" VALUE="0"/>
+        <PARAMETER NAME="HAS_ECC_ERR_INJECT" VALUE="0"/>
+        <PARAMETER NAME="FIFO_MEMORY_TYPE" VALUE="auto"/>
+        <PARAMETER NAME="Component_Name" VALUE="design_1_axis_data_fifo_0_1"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="s_axis_aresetn" SIGIS="rst" SIGNAME="xdma_0_axi_aresetn">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="axi_aresetn"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT CLKFREQUENCY="125000000" DIR="I" NAME="s_axis_aclk" SIGIS="clk" SIGNAME="xdma_0_axi_aclk">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="axi_aclk"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axis_tvalid" SIGIS="undef" SIGNAME="axis_data_fifo_1_s_axis_tvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tvalid_0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axis_tready" SIGIS="undef" SIGNAME="axis_data_fifo_1_s_axis_tready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tready_0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="63" NAME="s_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="axis_data_fifo_1_s_axis_tdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="m_axis_h2c_tdata_0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axis_tvalid" SIGIS="undef" SIGNAME="axis_data_fifo_1_m_axis_tvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="design_1_imp" PORT="M_AXIS_0_tvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axis_tready" SIGIS="undef" SIGNAME="axis_data_fifo_1_m_axis_tready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="design_1_imp" PORT="M_AXIS_0_tready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="63" NAME="m_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="axis_data_fifo_1_m_axis_tdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="design_1_imp" PORT="M_AXIS_0_tdata"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES>
+        <BUSINTERFACE BUSNAME="xdma_0_M_AXIS_H2C_0" NAME="S_AXIS" TYPE="TARGET" VLNV="xilinx.com:interface:axis:1.0">
+          <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="8"/>
+          <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
+          <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
+          <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
+          <PARAMETER NAME="HAS_TLAST" VALUE="0"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="125000000"/>
+          <PARAMETER NAME="PHASE" VALUE="0.000"/>
+          <PARAMETER NAME="CLK_DOMAIN" VALUE="design_1_xdma_0_0_axi_aclk"/>
+          <PARAMETER NAME="LAYERED_METADATA" VALUE="undef"/>
+          <PARAMETER NAME="INSERT_VIP" VALUE="0"/>
+          <PORTMAPS>
+            <PORTMAP LOGICAL="TDATA" PHYSICAL="s_axis_tdata"/>
+            <PORTMAP LOGICAL="TREADY" PHYSICAL="s_axis_tready"/>
+            <PORTMAP LOGICAL="TVALID" PHYSICAL="s_axis_tvalid"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+        <BUSINTERFACE BUSNAME="axis_data_fifo_1_M_AXIS" NAME="M_AXIS" TYPE="INITIATOR" VLNV="xilinx.com:interface:axis:1.0">
+          <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="8"/>
+          <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
+          <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
+          <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
+          <PARAMETER NAME="HAS_TLAST" VALUE="0"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="125000000"/>
+          <PARAMETER NAME="PHASE" VALUE="0.000"/>
+          <PARAMETER NAME="CLK_DOMAIN" VALUE="design_1_xdma_0_0_axi_aclk"/>
+          <PARAMETER NAME="LAYERED_METADATA" VALUE="undef"/>
+          <PARAMETER NAME="INSERT_VIP" VALUE="0"/>
+          <PORTMAPS>
+            <PORTMAP LOGICAL="TDATA" PHYSICAL="m_axis_tdata"/>
+            <PORTMAP LOGICAL="TREADY" PHYSICAL="m_axis_tready"/>
+            <PORTMAP LOGICAL="TVALID" PHYSICAL="m_axis_tvalid"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+      </BUSINTERFACES>
+    </MODULE>
+    <MODULE COREREVISION="21" FULLNAME="/util_ds_buf" HWVERSION="2.1" INSTANCE="util_ds_buf" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="util_ds_buf" VLNV="xilinx.com:ip:util_ds_buf:2.1">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="C_BUF_TYPE" VALUE="ibufdsgte2"/>
+        <PARAMETER NAME="C_SIZE" VALUE="1"/>
+        <PARAMETER NAME="C_BUFGCE_DIV" VALUE="1"/>
+        <PARAMETER NAME="C_BUFG_GT_SYNC" VALUE="0"/>
+        <PARAMETER NAME="C_SIM_DEVICE" VALUE="VERSAL_AI_CORE_ES1"/>
+        <PARAMETER NAME="Component_Name" VALUE="design_1_util_ds_buf_0"/>
+        <PARAMETER NAME="USE_BOARD_FLOW" VALUE="false"/>
+        <PARAMETER NAME="DIFF_CLK_IN_BOARD_INTERFACE" VALUE="Custom"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" LEFT="0" NAME="IBUF_DS_P" RIGHT="0" SIGIS="clk" SIGNAME="util_ds_buf_IBUF_DS_P">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="design_1_imp" PORT="pcie_ref_clk_p"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="0" NAME="IBUF_DS_N" RIGHT="0" SIGIS="clk" SIGNAME="util_ds_buf_IBUF_DS_N">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="design_1_imp" PORT="pcie_ref_clk_n"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT CLKFREQUENCY="100000000" DIR="O" LEFT="0" NAME="IBUF_OUT" RIGHT="0" SIGIS="clk" SIGNAME="util_ds_buf_IBUF_OUT">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="xdma_0" PORT="sys_clk"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT CLKFREQUENCY="100000000" DIR="O" LEFT="0" NAME="IBUF_DS_ODIV2" RIGHT="0" SIGIS="clk"/>
+      </PORTS>
+      <BUSINTERFACES>
+        <BUSINTERFACE BUSNAME="External_Interface_pcie_ref" NAME="CLK_IN_D" TYPE="TARGET" VLNV="xilinx.com:interface:diff_clock:1.0">
+          <PARAMETER NAME="CAN_DEBUG" VALUE="false"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="100000000"/>
+          <PORTMAPS>
+            <PORTMAP LOGICAL="CLK_P" PHYSICAL="IBUF_DS_P"/>
+            <PORTMAP LOGICAL="CLK_N" PHYSICAL="IBUF_DS_N"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+      </BUSINTERFACES>
+    </MODULE>
+    <MODULE COREREVISION="4" FULLNAME="/xdma_0" HWVERSION="4.1" INSTANCE="xdma_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xdma" VLNV="xilinx.com:ip:xdma:4.1">
+      <DOCUMENTS>
+        <DOCUMENT SOURCE="http://www.xilinx.com/cgi-bin/docs/ipdoc?c=xdma;v=v4_1;d=pg195-pcie-dma.pdf"/>
+      </DOCUMENTS>
+      <PARAMETERS>
+        <PARAMETER NAME="COMPONENT_NAME" VALUE="xdma_0"/>
+        <PARAMETER NAME="PL_UPSTREAM_FACING" VALUE="true"/>
+        <PARAMETER NAME="TL_LEGACY_MODE_ENABLE" VALUE="false"/>
+        <PARAMETER NAME="PCIE_BLK_LOCN" VALUE="0"/>
+        <PARAMETER NAME="PL_LINK_CAP_MAX_LINK_WIDTH" VALUE="2"/>
+        <PARAMETER NAME="PL_LINK_CAP_MAX_LINK_SPEED" VALUE="2"/>
+        <PARAMETER NAME="REF_CLK_FREQ" VALUE="0"/>
+        <PARAMETER NAME="DRP_CLK_SEL" VALUE="0"/>
+        <PARAMETER NAME="FREE_RUN_FREQ" VALUE="0"/>
+        <PARAMETER NAME="AXI_ADDR_WIDTH" VALUE="64"/>
+        <PARAMETER NAME="AXI_DATA_WIDTH" VALUE="64"/>
+        <PARAMETER NAME="CORE_CLK_FREQ" VALUE="2"/>
+        <PARAMETER NAME="PLL_TYPE" VALUE="2"/>
+        <PARAMETER NAME="USER_CLK_FREQ" VALUE="2"/>
+        <PARAMETER NAME="SILICON_REV" VALUE="Pre-Production"/>
+        <PARAMETER NAME="PIPE_SIM" VALUE="false"/>
+        <PARAMETER NAME="EXT_CH_GT_DRP" VALUE="false"/>
+        <PARAMETER NAME="PCIE3_DRP" VALUE="false"/>
+        <PARAMETER NAME="DEDICATE_PERST" VALUE="true"/>
+        <PARAMETER NAME="SYS_RESET_POLARITY" VALUE="0"/>
+        <PARAMETER NAME="MCAP_ENABLEMENT" VALUE="NONE"/>
+        <PARAMETER NAME="EXT_STARTUP_PRIMITIVE" VALUE="false"/>
+        <PARAMETER NAME="PF0_VENDOR_ID" VALUE="0x10EE"/>
+        <PARAMETER NAME="PF0_DEVICE_ID" VALUE="0x7022"/>
+        <PARAMETER NAME="PF0_REVISION_ID" VALUE="0x00"/>
+        <PARAMETER NAME="PF0_SUBSYSTEM_VENDOR_ID" VALUE="0x10EE"/>
+        <PARAMETER NAME="PF0_SUBSYSTEM_ID" VALUE="0x0007"/>
+        <PARAMETER NAME="PF0_CLASS_CODE" VALUE="0x070001"/>
+        <PARAMETER NAME="PF1_VENDOR_ID" VALUE="0x10EE"/>
+        <PARAMETER NAME="PF1_DEVICE_ID" VALUE="0x9111"/>
+        <PARAMETER NAME="PF1_REVISION_ID" VALUE="0x00"/>
+        <PARAMETER NAME="PF1_SUBSYSTEM_VENDOR_ID" VALUE="0x10EE"/>
+        <PARAMETER NAME="PF1_SUBSYSTEM_ID" VALUE="0x0007"/>
+        <PARAMETER NAME="PF1_CLASS_CODE" VALUE="0x070001"/>
+        <PARAMETER NAME="PF2_DEVICE_ID" VALUE="0x9211"/>
+        <PARAMETER NAME="PF2_REVISION_ID" VALUE="0x00"/>
+        <PARAMETER NAME="PF2_SUBSYSTEM_ID" VALUE="0x0007"/>
+        <PARAMETER NAME="PF3_DEVICE_ID" VALUE="0x9311"/>
+        <PARAMETER NAME="PF3_REVISION_ID" VALUE="0x00"/>
+        <PARAMETER NAME="PF3_SUBSYSTEM_ID" VALUE="0x0007"/>
+        <PARAMETER NAME="AXILITE_MASTER_APERTURE_SIZE" VALUE="0x0D"/>
+        <PARAMETER NAME="AXILITE_MASTER_CONTROL" VALUE="0x4"/>
+        <PARAMETER NAME="XDMA_APERTURE_SIZE" VALUE="0x09"/>
+        <PARAMETER NAME="XDMA_CONTROL" VALUE="0x5"/>
+        <PARAMETER NAME="AXIST_BYPASS_APERTURE_SIZE" VALUE="0x0D"/>
+        <PARAMETER NAME="AXIST_BYPASS_CONTROL" VALUE="0x0"/>
+        <PARAMETER NAME="PF0_INTERRUPT_PIN" VALUE="000"/>
+        <PARAMETER NAME="PF0_MSI_CAP_MULTIMSGCAP" VALUE="0"/>
+        <PARAMETER NAME="C_COMP_TIMEOUT" VALUE="1"/>
+        <PARAMETER NAME="C_TIMEOUT0_SEL" VALUE="0xE"/>
+        <PARAMETER NAME="C_TIMEOUT1_SEL" VALUE="0xF"/>
+        <PARAMETER NAME="C_TIMEOUT_MULT" VALUE="0x3"/>
+        <PARAMETER NAME="C_OLD_BRIDGE_TIMEOUT" VALUE="0"/>
+        <PARAMETER NAME="SHARED_LOGIC" VALUE="0"/>
+        <PARAMETER NAME="SHARED_LOGIC_CLK" VALUE="false"/>
+        <PARAMETER NAME="SHARED_LOGIC_BOTH" VALUE="false"/>
+        <PARAMETER NAME="SHARED_LOGIC_GTC" VALUE="false"/>
+        <PARAMETER NAME="SHARED_LOGIC_GTC_7XG2" VALUE="false"/>
+        <PARAMETER NAME="SHARED_LOGIC_CLK_7XG2" VALUE="false"/>
+        <PARAMETER NAME="SHARED_LOGIC_BOTH_7XG2" VALUE="false"/>
+        <PARAMETER NAME="EN_TRANSCEIVER_STATUS_PORTS" VALUE="false"/>
+        <PARAMETER NAME="IS_BOARD_PROJECT" VALUE="0"/>
+        <PARAMETER NAME="EN_GT_SELECTION" VALUE="FALSE"/>
+        <PARAMETER NAME="SELECT_QUAD" VALUE="GTH_Quad_128"/>
+        <PARAMETER NAME="ULTRASCALE" VALUE="FALSE"/>
+        <PARAMETER NAME="ULTRASCALE_PLUS" VALUE="FALSE"/>
+        <PARAMETER NAME="V7_GEN3" VALUE="FALSE"/>
+        <PARAMETER NAME="MSI_ENABLED" VALUE="TRUE"/>
+        <PARAMETER NAME="DEV_PORT_TYPE" VALUE="0"/>
+        <PARAMETER NAME="XDMA_AXI_INTF_MM" VALUE="0"/>
+        <PARAMETER NAME="XDMA_PCIE_64BIT_EN" VALUE="xdma_pcie_64bit_en"/>
+        <PARAMETER NAME="XDMA_AXILITE_MASTER" VALUE="TRUE"/>
+        <PARAMETER NAME="XDMA_AXIST_BYPASS" VALUE="FALSE"/>
+        <PARAMETER NAME="XDMA_RNUM_CHNL" VALUE="1"/>
+        <PARAMETER NAME="XDMA_WNUM_CHNL" VALUE="1"/>
+        <PARAMETER NAME="XDMA_AXILITE_SLAVE" VALUE="FALSE"/>
+        <PARAMETER NAME="XDMA_NUM_USR_IRQ" VALUE="1"/>
+        <PARAMETER NAME="XDMA_RNUM_RIDS" VALUE="32"/>
+        <PARAMETER NAME="XDMA_WNUM_RIDS" VALUE="16"/>
+        <PARAMETER NAME="C_M_AXI_ID_WIDTH" VALUE="4"/>
+        <PARAMETER NAME="C_AXIBAR_NUM" VALUE="1"/>
+        <PARAMETER NAME="C_FAMILY" VALUE="artix7"/>
+        <PARAMETER NAME="XDMA_NUM_PCIE_TAG" VALUE="64"/>
+        <PARAMETER NAME="EN_AXI_MASTER_IF" VALUE="TRUE"/>
+        <PARAMETER NAME="EN_WCHNL_0" VALUE="TRUE"/>
+        <PARAMETER NAME="EN_WCHNL_1" VALUE="FALSE"/>
+        <PARAMETER NAME="EN_WCHNL_2" VALUE="FALSE"/>
+        <PARAMETER NAME="EN_WCHNL_3" VALUE="FALSE"/>
+        <PARAMETER NAME="EN_WCHNL_4" VALUE="FALSE"/>
+        <PARAMETER NAME="EN_WCHNL_5" VALUE="FALSE"/>
+        <PARAMETER NAME="EN_WCHNL_6" VALUE="FALSE"/>
+        <PARAMETER NAME="EN_WCHNL_7" VALUE="FALSE"/>
+        <PARAMETER NAME="EN_RCHNL_0" VALUE="TRUE"/>
+        <PARAMETER NAME="EN_RCHNL_1" VALUE="FALSE"/>
+        <PARAMETER NAME="EN_RCHNL_2" VALUE="FALSE"/>
+        <PARAMETER NAME="EN_RCHNL_3" VALUE="FALSE"/>
+        <PARAMETER NAME="EN_RCHNL_4" VALUE="FALSE"/>
+        <PARAMETER NAME="EN_RCHNL_5" VALUE="FALSE"/>
+        <PARAMETER NAME="EN_RCHNL_6" VALUE="FALSE"/>
+        <PARAMETER NAME="EN_RCHNL_7" VALUE="FALSE"/>
+        <PARAMETER NAME="XDMA_DSC_BYPASS" VALUE="FALSE"/>
+        <PARAMETER NAME="C_METERING_ON" VALUE="1"/>
+        <PARAMETER NAME="RX_DETECT" VALUE="0"/>
+        <PARAMETER NAME="C_ATS_ENABLE" VALUE="FALSE"/>
+        <PARAMETER NAME="C_ATS_CAP_NEXTPTR" VALUE="0x000"/>
+        <PARAMETER NAME="C_PR_CAP_NEXTPTR" VALUE="0x000"/>
+        <PARAMETER NAME="C_PRI_ENABLE" VALUE="FALSE"/>
+        <PARAMETER NAME="DSC_BYPASS_RD" VALUE="0"/>
+        <PARAMETER NAME="DSC_BYPASS_WR" VALUE="0"/>
+        <PARAMETER NAME="XDMA_STS_PORTS" VALUE="FALSE"/>
+        <PARAMETER NAME="MSIX_ENABLED" VALUE="TRUE"/>
+        <PARAMETER NAME="WR_CH0_ENABLED" VALUE="FALSE"/>
+        <PARAMETER NAME="WR_CH1_ENABLED" VALUE="FALSE"/>
+        <PARAMETER NAME="WR_CH2_ENABLED" VALUE="FALSE"/>
+        <PARAMETER NAME="WR_CH3_ENABLED" VALUE="FALSE"/>
+        <PARAMETER NAME="RD_CH0_ENABLED" VALUE="FALSE"/>
+        <PARAMETER NAME="RD_CH1_ENABLED" VALUE="FALSE"/>
+        <PARAMETER NAME="RD_CH2_ENABLED" VALUE="FALSE"/>
+        <PARAMETER NAME="RD_CH3_ENABLED" VALUE="FALSE"/>
+        <PARAMETER NAME="CFG_MGMT_IF" VALUE="FALSE"/>
+        <PARAMETER NAME="RQ_SEQ_NUM_IGNORE" VALUE="0"/>
+        <PARAMETER NAME="CFG_EXT_IF" VALUE="FALSE"/>
+        <PARAMETER NAME="LEGACY_CFG_EXT_IF" VALUE="FALSE"/>
+        <PARAMETER NAME="C_PARITY_CHECK" VALUE="0"/>
+        <PARAMETER NAME="C_PARITY_GEN" VALUE="0"/>
+        <PARAMETER NAME="C_PARITY_PROP" VALUE="0"/>
+        <PARAMETER NAME="C_ECC_ENABLE" VALUE="0"/>
+        <PARAMETER NAME="EN_DEBUG_PORTS" VALUE="FALSE"/>
+        <PARAMETER NAME="VU9P_BOARD" VALUE="FALSE"/>
+        <PARAMETER NAME="ENABLE_JTAG_DBG" VALUE="FALSE"/>
+        <PARAMETER NAME="ENABLE_IBERT" VALUE="false"/>
+        <PARAMETER NAME="MM_SLAVE_EN" VALUE="0"/>
+        <PARAMETER NAME="DMA_EN" VALUE="1"/>
+        <PARAMETER NAME="C_AXIBAR_0" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_AXIBAR_1" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_AXIBAR_2" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_AXIBAR_3" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_AXIBAR_4" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_AXIBAR_5" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_AXIBAR_HIGHADDR_0" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_AXIBAR_HIGHADDR_1" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_AXIBAR_HIGHADDR_2" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_AXIBAR_HIGHADDR_3" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_AXIBAR_HIGHADDR_4" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_AXIBAR_HIGHADDR_5" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_AXIBAR2PCIEBAR_0" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_AXIBAR2PCIEBAR_1" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_AXIBAR2PCIEBAR_2" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_AXIBAR2PCIEBAR_3" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_AXIBAR2PCIEBAR_4" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_AXIBAR2PCIEBAR_5" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="EN_AXI_SLAVE_IF" VALUE="TRUE"/>
+        <PARAMETER NAME="C_INCLUDE_BAROFFSET_REG" VALUE="1"/>
+        <PARAMETER NAME="C_S_AXI_ID_WIDTH" VALUE="4"/>
+        <PARAMETER NAME="C_S_AXI_NUM_READ" VALUE="8"/>
+        <PARAMETER NAME="C_M_AXI_NUM_READ" VALUE="8"/>
+        <PARAMETER NAME="C_M_AXI_NUM_READQ" VALUE="2"/>
+        <PARAMETER NAME="C_S_AXI_NUM_WRITE" VALUE="8"/>
+        <PARAMETER NAME="C_M_AXI_NUM_WRITE" VALUE="4"/>
+        <PARAMETER NAME="MSIX_IMPL_EXT" VALUE="FALSE"/>
+        <PARAMETER NAME="AXI_ACLK_LOOPBACK" VALUE="FALSE"/>
+        <PARAMETER NAME="PF0_BAR0_APERTURE_SIZE" VALUE="0x0A"/>
+        <PARAMETER NAME="PF0_BAR0_CONTROL" VALUE="0x4"/>
+        <PARAMETER NAME="PF0_BAR1_APERTURE_SIZE" VALUE="0x05"/>
+        <PARAMETER NAME="PF0_BAR1_CONTROL" VALUE="0x0"/>
+        <PARAMETER NAME="PF0_BAR2_APERTURE_SIZE" VALUE="0x05"/>
+        <PARAMETER NAME="PF0_BAR2_CONTROL" VALUE="0x0"/>
+        <PARAMETER NAME="PF0_BAR3_APERTURE_SIZE" VALUE="0x05"/>
+        <PARAMETER NAME="PF0_BAR3_CONTROL" VALUE="0x0"/>
+        <PARAMETER NAME="PF0_BAR4_APERTURE_SIZE" VALUE="0x05"/>
+        <PARAMETER NAME="PF0_BAR4_CONTROL" VALUE="0x0"/>
+        <PARAMETER NAME="PF0_BAR5_APERTURE_SIZE" VALUE="0x05"/>
+        <PARAMETER NAME="PF0_BAR5_CONTROL" VALUE="0x0"/>
+        <PARAMETER NAME="PF0_EXPANSION_ROM_APERTURE_SIZE" VALUE="0x000"/>
+        <PARAMETER NAME="PF0_EXPANSION_ROM_ENABLE" VALUE="FALSE"/>
+        <PARAMETER NAME="PCIEBAR_NUM" VALUE="6"/>
+        <PARAMETER NAME="C_PCIEBAR2AXIBAR_0" VALUE="0x0000000040000000"/>
+        <PARAMETER NAME="C_PCIEBAR2AXIBAR_1" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_PCIEBAR2AXIBAR_2" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_PCIEBAR2AXIBAR_3" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_PCIEBAR2AXIBAR_4" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_PCIEBAR2AXIBAR_5" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_PCIEBAR2AXIBAR_6" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="BARLITE1" VALUE="2"/>
+        <PARAMETER NAME="BARLITE2" VALUE="7"/>
+        <PARAMETER NAME="VCU118_BOARD" VALUE="FALSE"/>
+        <PARAMETER NAME="SPLIT_DMA" VALUE="FALSE"/>
+        <PARAMETER NAME="USE_STANDARD_INTERFACES" VALUE="FALSE"/>
+        <PARAMETER NAME="DMA_2RP" VALUE="FALSE"/>
+        <PARAMETER NAME="SRIOV_ACTIVE_VFS" VALUE="252"/>
+        <PARAMETER NAME="PIPE_LINE_STAGE" VALUE="2"/>
+        <PARAMETER NAME="AXIS_PIPE_LINE_STAGE" VALUE="0"/>
+        <PARAMETER NAME="MULT_PF_DES" VALUE="FALSE"/>
+        <PARAMETER NAME="PF_SWAP" VALUE="FALSE"/>
+        <PARAMETER NAME="PF0_MSIX_TAR_ID" VALUE="0x08"/>
+        <PARAMETER NAME="PF1_MSIX_TAR_ID" VALUE="0x09"/>
+        <PARAMETER NAME="RUNBIT_FIX" VALUE="FALSE"/>
+        <PARAMETER NAME="xlnx_ref_board" VALUE="None"/>
+        <PARAMETER NAME="GTWIZ_IN_CORE" VALUE="1"/>
+        <PARAMETER NAME="GTCOM_IN_CORE" VALUE="2"/>
+        <PARAMETER NAME="INS_LOSS_PROFILE" VALUE="Add-in_Card"/>
+        <PARAMETER NAME="FUNC_MODE" VALUE="1"/>
+        <PARAMETER NAME="PF1_ENABLED" VALUE="0"/>
+        <PARAMETER NAME="DMA_RESET_SOURCE_SEL" VALUE="0"/>
+        <PARAMETER NAME="PF1_BAR0_APERTURE_SIZE" VALUE="0x12"/>
+        <PARAMETER NAME="PF1_BAR0_CONTROL" VALUE="0x4"/>
+        <PARAMETER NAME="PF1_BAR1_APERTURE_SIZE" VALUE="0x0A"/>
+        <PARAMETER NAME="PF1_BAR1_CONTROL" VALUE="0x0"/>
+        <PARAMETER NAME="PF1_BAR2_APERTURE_SIZE" VALUE="0x0A"/>
+        <PARAMETER NAME="PF1_BAR2_CONTROL" VALUE="0x6"/>
+        <PARAMETER NAME="PF1_BAR3_APERTURE_SIZE" VALUE="0x0A"/>
+        <PARAMETER NAME="PF1_BAR3_CONTROL" VALUE="0x0"/>
+        <PARAMETER NAME="PF1_BAR4_APERTURE_SIZE" VALUE="0x0A"/>
+        <PARAMETER NAME="PF1_BAR4_CONTROL" VALUE="0x6"/>
+        <PARAMETER NAME="PF1_BAR5_APERTURE_SIZE" VALUE="0x0A"/>
+        <PARAMETER NAME="PF1_BAR5_CONTROL" VALUE="0x0"/>
+        <PARAMETER NAME="PF1_EXPANSION_ROM_APERTURE_SIZE" VALUE="0x000"/>
+        <PARAMETER NAME="PF1_EXPANSION_ROM_ENABLE" VALUE="FALSE"/>
+        <PARAMETER NAME="PF1_PCIEBAR2AXIBAR_0" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="PF1_PCIEBAR2AXIBAR_1" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="PF1_PCIEBAR2AXIBAR_2" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="PF1_PCIEBAR2AXIBAR_3" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="PF1_PCIEBAR2AXIBAR_4" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="PF1_PCIEBAR2AXIBAR_5" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="PF1_PCIEBAR2AXIBAR_6" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="C_MSIX_INT_TABLE_EN" VALUE="1"/>
+        <PARAMETER NAME="VU9P_TUL_EX" VALUE="FALSE"/>
+        <PARAMETER NAME="PCIE_BLK_TYPE" VALUE="0"/>
+        <PARAMETER NAME="CCIX_ENABLE" VALUE="FALSE"/>
+        <PARAMETER NAME="CCIX_DVSEC" VALUE="FALSE"/>
+        <PARAMETER NAME="EXT_SYS_CLK_BUFG" VALUE="FALSE"/>
+        <PARAMETER NAME="C_NUM_OF_SC" VALUE="1"/>
+        <PARAMETER NAME="USR_IRQ_EXDES" VALUE="FALSE"/>
+        <PARAMETER NAME="AXI_VIP_IN_EXDES" VALUE="FALSE"/>
+        <PARAMETER NAME="PIPE_DEBUG_EN" VALUE="FALSE"/>
+        <PARAMETER NAME="XDMA_NON_INCREMENTAL_EXDES" VALUE="FALSE"/>
+        <PARAMETER NAME="XDMA_ST_INFINITE_DESC_EXDES" VALUE="FALSE"/>
+        <PARAMETER NAME="EXT_XVC_VSEC_ENABLE" VALUE="FALSE"/>
+        <PARAMETER NAME="ACS_EXT_CAP_ENABLE" VALUE="FALSE"/>
+        <PARAMETER NAME="EN_PCIE_DEBUG_PORTS" VALUE="FALSE"/>
+        <PARAMETER NAME="MULTQ_EN" VALUE="0"/>
+        <PARAMETER NAME="DMA_MM" VALUE="0"/>
+        <PARAMETER NAME="DMA_ST" VALUE="1"/>
+        <PARAMETER NAME="C_PCIE_PFS_SUPPORTED" VALUE="0"/>
+        <PARAMETER NAME="C_SRIOV_EN" VALUE="0"/>
+        <PARAMETER NAME="BARLITE_EXT_PF0" VALUE="0x01"/>
+        <PARAMETER NAME="BARLITE_EXT_PF1" VALUE="0x00"/>
+        <PARAMETER NAME="BARLITE_EXT_PF2" VALUE="0x00"/>
+        <PARAMETER NAME="BARLITE_EXT_PF3" VALUE="0x00"/>
+        <PARAMETER NAME="BARLITE_INT_PF0" VALUE="0x04"/>
+        <PARAMETER NAME="BARLITE_INT_PF1" VALUE="0x00"/>
+        <PARAMETER NAME="BARLITE_INT_PF2" VALUE="0x00"/>
+        <PARAMETER NAME="BARLITE_INT_PF3" VALUE="0x00"/>
+        <PARAMETER NAME="NUM_VFS_PF0" VALUE="0"/>
+        <PARAMETER NAME="NUM_VFS_PF1" VALUE="0"/>
+        <PARAMETER NAME="NUM_VFS_PF2" VALUE="0"/>
+        <PARAMETER NAME="NUM_VFS_PF3" VALUE="0"/>
+        <PARAMETER NAME="FIRSTVF_OFFSET_PF0" VALUE="0"/>
+        <PARAMETER NAME="FIRSTVF_OFFSET_PF1" VALUE="0"/>
+        <PARAMETER NAME="FIRSTVF_OFFSET_PF2" VALUE="0"/>
+        <PARAMETER NAME="FIRSTVF_OFFSET_PF3" VALUE="0"/>
+        <PARAMETER NAME="VF_BARLITE_EXT_PF0" VALUE="0x00"/>
+        <PARAMETER NAME="VF_BARLITE_EXT_PF1" VALUE="0x00"/>
+        <PARAMETER NAME="VF_BARLITE_EXT_PF2" VALUE="0x00"/>
+        <PARAMETER NAME="VF_BARLITE_EXT_PF3" VALUE="0x00"/>
+        <PARAMETER NAME="VF_BARLITE_INT_PF0" VALUE="0x01"/>
+        <PARAMETER NAME="VF_BARLITE_INT_PF1" VALUE="0x01"/>
+        <PARAMETER NAME="VF_BARLITE_INT_PF2" VALUE="0x01"/>
+        <PARAMETER NAME="VF_BARLITE_INT_PF3" VALUE="0x01"/>
+        <PARAMETER NAME="C_C2H_NUM_CHNL" VALUE="1"/>
+        <PARAMETER NAME="C_H2C_NUM_CHNL" VALUE="1"/>
+        <PARAMETER NAME="H2C_XDMA_CHNL" VALUE="0x0F"/>
+        <PARAMETER NAME="C2H_XDMA_CHNL" VALUE="0x0F"/>
+        <PARAMETER NAME="AXISTEN_IF_ENABLE_MSG_ROUTE" VALUE="0x00000"/>
+        <PARAMETER NAME="ENABLE_MORE" VALUE="FALSE"/>
+        <PARAMETER NAME="DISABLE_BRAM_PIPELINE" VALUE="FALSE"/>
+        <PARAMETER NAME="DISABLE_EQ_SYNCHRONIZER" VALUE="FALSE"/>
+        <PARAMETER NAME="C_ENABLE_RESOURCE_REDUCTION" VALUE="FALSE"/>
+        <PARAMETER NAME="GEN4_EIEOS_0S7" VALUE="TRUE"/>
+        <PARAMETER NAME="C_S_AXI_SUPPORTS_NARROW_BURST" VALUE="0"/>
+        <PARAMETER NAME="ENABLE_ATS_SWITCH" VALUE="FALSE"/>
+        <PARAMETER NAME="C_ATS_SWITCH_UNIQUE_BDF" VALUE="1"/>
+        <PARAMETER NAME="C_LAST_CORE_CAP_ADDR" VALUE="0x100"/>
+        <PARAMETER NAME="C_VSEC_CAP_ADDR" VALUE="0x128"/>
+        <PARAMETER NAME="SOFT_RESET_EN" VALUE="FALSE"/>
+        <PARAMETER NAME="INTERRUPT_OUT_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_MSI_RX_PIN_EN" VALUE="0"/>
+        <PARAMETER NAME="C_MSIX_RX_PIN_EN" VALUE="1"/>
+        <PARAMETER NAME="C_INTX_RX_PIN_EN" VALUE="1"/>
+        <PARAMETER NAME="MSIX_RX_DECODE_EN" VALUE="FALSE"/>
+        <PARAMETER NAME="PCIE_ID_IF" VALUE="FALSE"/>
+        <PARAMETER NAME="TL_PF_ENABLE_REG" VALUE="0"/>
+        <PARAMETER NAME="AXSIZE_BYTE_ACCESS_EN" VALUE="FALSE"/>
+        <PARAMETER NAME="SPLIT_DMA_SINGLE_PF" VALUE="FALSE"/>
+        <PARAMETER NAME="RBAR_ENABLE" VALUE="FALSE"/>
+        <PARAMETER NAME="C_SMMU_EN" VALUE="0"/>
+        <PARAMETER NAME="C_M_AXI_AWUSER_WIDTH" VALUE="8"/>
+        <PARAMETER NAME="C_M_AXI_ARUSER_WIDTH" VALUE="8"/>
+        <PARAMETER NAME="C_SLAVE_READ_64OS_EN" VALUE="0"/>
+        <PARAMETER NAME="Component_Name" VALUE="design_1_xdma_0_0"/>
+        <PARAMETER NAME="functional_mode" VALUE="DMA"/>
+        <PARAMETER NAME="mode_selection" VALUE="Basic"/>
+        <PARAMETER NAME="device_port_type" VALUE="PCI_Express_Endpoint_device"/>
+        <PARAMETER NAME="pcie_blk_locn" VALUE="X0Y0"/>
+        <PARAMETER NAME="pl_link_cap_max_link_width" VALUE="X2"/>
+        <PARAMETER NAME="pl_link_cap_max_link_speed" VALUE="5.0_GT/s"/>
+        <PARAMETER NAME="ref_clk_freq" VALUE="100_MHz"/>
+        <PARAMETER NAME="drp_clk_sel" VALUE="Internal"/>
+        <PARAMETER NAME="free_run_freq" VALUE="100_MHz"/>
+        <PARAMETER NAME="axi_addr_width" VALUE="64"/>
+        <PARAMETER NAME="axi_data_width" VALUE="64_bit"/>
+        <PARAMETER NAME="axisten_freq" VALUE="125"/>
+        <PARAMETER NAME="en_axi_slave_if" VALUE="true"/>
+        <PARAMETER NAME="en_axi_master_if" VALUE="true"/>
+        <PARAMETER NAME="pipe_sim" VALUE="false"/>
+        <PARAMETER NAME="en_ext_ch_gt_drp" VALUE="false"/>
+        <PARAMETER NAME="en_pcie_drp" VALUE="false"/>
+        <PARAMETER NAME="dedicate_perst" VALUE="true"/>
+        <PARAMETER NAME="sys_reset_polarity" VALUE="ACTIVE_LOW"/>
+        <PARAMETER NAME="mcap_enablement" VALUE="None"/>
+        <PARAMETER NAME="mcap_fpga_bitstream_version" VALUE="00000000"/>
+        <PARAMETER NAME="ext_startup_primitive" VALUE="false"/>
+        <PARAMETER NAME="enable_code" VALUE="0000"/>
+        <PARAMETER NAME="vendor_id" VALUE="10EE"/>
+        <PARAMETER NAME="pf0_device_id" VALUE="7022"/>
+        <PARAMETER NAME="pf0_revision_id" VALUE="00"/>
+        <PARAMETER NAME="pf0_subsystem_vendor_id" VALUE="10EE"/>
+        <PARAMETER NAME="pf0_subsystem_id" VALUE="0007"/>
+        <PARAMETER NAME="pf0_Use_Class_Code_Lookup_Assistant" VALUE="false"/>
+        <PARAMETER NAME="pf0_base_class_menu" VALUE="Simple_communication_controllers"/>
+        <PARAMETER NAME="pf0_class_code_base" VALUE="07"/>
+        <PARAMETER NAME="pf0_sub_class_interface_menu" VALUE="16450_compatible_serial_controller"/>
+        <PARAMETER NAME="pf0_class_code_sub" VALUE="00"/>
+        <PARAMETER NAME="pf0_class_code_interface" VALUE="01"/>
+        <PARAMETER NAME="pf0_class_code" VALUE="070001"/>
+        <PARAMETER NAME="axilite_master_en" VALUE="true"/>
+        <PARAMETER NAME="axilite_master_size" VALUE="1"/>
+        <PARAMETER NAME="axilite_master_scale" VALUE="Megabytes"/>
+        <PARAMETER NAME="xdma_en" VALUE="true"/>
+        <PARAMETER NAME="xdma_size" VALUE="64"/>
+        <PARAMETER NAME="xdma_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="axist_bypass_en" VALUE="false"/>
+        <PARAMETER NAME="axist_bypass_size" VALUE="1"/>
+        <PARAMETER NAME="axist_bypass_scale" VALUE="Megabytes"/>
+        <PARAMETER NAME="pciebar2axibar_axil_master" VALUE="0x40000000"/>
+        <PARAMETER NAME="pciebar2axibar_xdma" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pciebar2axibar_axist_bypass" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pf0_interrupt_pin" VALUE="NONE"/>
+        <PARAMETER NAME="pf0_msi_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf0_msi_cap_multimsgcap" VALUE="1_vector"/>
+        <PARAMETER NAME="comp_timeout" VALUE="50ms"/>
+        <PARAMETER NAME="timeout0_sel" VALUE="14"/>
+        <PARAMETER NAME="timeout1_sel" VALUE="15"/>
+        <PARAMETER NAME="timeout_mult" VALUE="3"/>
+        <PARAMETER NAME="old_bridge_timeout" VALUE="false"/>
+        <PARAMETER NAME="Shared_Logic" VALUE="1"/>
+        <PARAMETER NAME="Shared_Logic_Clk" VALUE="false"/>
+        <PARAMETER NAME="Shared_Logic_Both" VALUE="false"/>
+        <PARAMETER NAME="Shared_Logic_Gtc" VALUE="false"/>
+        <PARAMETER NAME="Shared_Logic_Gtc_7xG2" VALUE="false"/>
+        <PARAMETER NAME="Shared_Logic_Clk_7xG2" VALUE="false"/>
+        <PARAMETER NAME="Shared_Logic_Both_7xG2" VALUE="false"/>
+        <PARAMETER NAME="en_transceiver_status_ports" VALUE="false"/>
+        <PARAMETER NAME="xdma_rnum_chnl" VALUE="1"/>
+        <PARAMETER NAME="xdma_wnum_chnl" VALUE="1"/>
+        <PARAMETER NAME="xdma_axilite_slave" VALUE="false"/>
+        <PARAMETER NAME="xdma_num_usr_irq" VALUE="1"/>
+        <PARAMETER NAME="xdma_rnum_rids" VALUE="32"/>
+        <PARAMETER NAME="xdma_wnum_rids" VALUE="16"/>
+        <PARAMETER NAME="SYS_RST_N_BOARD_INTERFACE" VALUE="Custom"/>
+        <PARAMETER NAME="PCIE_BOARD_INTERFACE" VALUE="Custom"/>
+        <PARAMETER NAME="en_gt_selection" VALUE="false"/>
+        <PARAMETER NAME="select_quad" VALUE="GTH_Quad_128"/>
+        <PARAMETER NAME="RX_PPM_OFFSET" VALUE="0"/>
+        <PARAMETER NAME="RX_SSC_PPM" VALUE="0"/>
+        <PARAMETER NAME="INS_LOSS_NYQ" VALUE="15"/>
+        <PARAMETER NAME="PHY_LP_TXPRESET" VALUE="4"/>
+        <PARAMETER NAME="coreclk_freq" VALUE="500"/>
+        <PARAMETER NAME="plltype" VALUE="QPLL1"/>
+        <PARAMETER NAME="xdma_axi_intf_mm" VALUE="AXI_Stream"/>
+        <PARAMETER NAME="xdma_pcie_64bit_en" VALUE="true"/>
+        <PARAMETER NAME="silicon_rev" VALUE="Pre-Production"/>
+        <PARAMETER NAME="xdma_dsc_bypass" VALUE="false"/>
+        <PARAMETER NAME="performance" VALUE="false"/>
+        <PARAMETER NAME="pcie_extended_tag" VALUE="true"/>
+        <PARAMETER NAME="rx_detect" VALUE="Default"/>
+        <PARAMETER NAME="pf0_link_status_slot_clock_config" VALUE="true"/>
+        <PARAMETER NAME="dsc_bypass_rd" VALUE="0000"/>
+        <PARAMETER NAME="dsc_bypass_wr" VALUE="0000"/>
+        <PARAMETER NAME="xdma_sts_ports" VALUE="false"/>
+        <PARAMETER NAME="pf0_msix_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf0_msix_cap_table_size" VALUE="01F"/>
+        <PARAMETER NAME="pf0_msix_cap_table_offset" VALUE="00008000"/>
+        <PARAMETER NAME="pf0_msix_cap_table_bir" VALUE="BAR_3:2"/>
+        <PARAMETER NAME="pf0_msix_cap_pba_offset" VALUE="00008FE0"/>
+        <PARAMETER NAME="pf0_msix_cap_pba_bir" VALUE="BAR_3:2"/>
+        <PARAMETER NAME="pf1_msix_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf1_msix_cap_table_size" VALUE="01F"/>
+        <PARAMETER NAME="pf1_msix_cap_table_offset" VALUE="00009000"/>
+        <PARAMETER NAME="pf1_msix_cap_table_bir" VALUE="BAR_0"/>
+        <PARAMETER NAME="pf1_msix_cap_pba_offset" VALUE="00009FE0"/>
+        <PARAMETER NAME="pf1_msix_cap_pba_bir" VALUE="BAR_0"/>
+        <PARAMETER NAME="cfg_mgmt_if" VALUE="false"/>
+        <PARAMETER NAME="ins_loss_profile" VALUE="Add-in_Card"/>
+        <PARAMETER NAME="axil_master_64bit_en" VALUE="false"/>
+        <PARAMETER NAME="axi_bypass_64bit_en" VALUE="false"/>
+        <PARAMETER NAME="axil_master_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="xdma_pcie_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="axi_bypass_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="cfg_ext_if" VALUE="false"/>
+        <PARAMETER NAME="legacy_cfg_ext_if" VALUE="false"/>
+        <PARAMETER NAME="parity_settings" VALUE="None"/>
+        <PARAMETER NAME="ecc_en" VALUE="false"/>
+        <PARAMETER NAME="en_debug_ports" VALUE="false"/>
+        <PARAMETER NAME="axi_id_width" VALUE="4"/>
+        <PARAMETER NAME="vu9p_board" VALUE="false"/>
+        <PARAMETER NAME="type1_membase_memlimit_enable" VALUE="Disabled"/>
+        <PARAMETER NAME="type1_prefetchable_membase_memlimit" VALUE="Disabled"/>
+        <PARAMETER NAME="enable_jtag_dbg" VALUE="false"/>
+        <PARAMETER NAME="enable_ibert" VALUE="false"/>
+        <PARAMETER NAME="axibar_num" VALUE="1"/>
+        <PARAMETER NAME="axibar_0" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="axibar_1" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="axibar_2" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="axibar_3" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="axibar_4" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="axibar_5" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="axibar_highaddr_0" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="axibar_highaddr_1" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="axibar_highaddr_2" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="axibar_highaddr_3" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="axibar_highaddr_4" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="axibar_highaddr_5" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="axibar2pciebar_0" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="axibar2pciebar_1" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="axibar2pciebar_2" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="axibar2pciebar_3" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="axibar2pciebar_4" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="axibar2pciebar_5" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="include_baroffset_reg" VALUE="true"/>
+        <PARAMETER NAME="BASEADDR" VALUE="0x00001000"/>
+        <PARAMETER NAME="HIGHADDR" VALUE="0x00001FFF"/>
+        <PARAMETER NAME="s_axi_id_width" VALUE="4"/>
+        <PARAMETER NAME="c_m_axi_num_write" VALUE="8"/>
+        <PARAMETER NAME="c_m_axi_num_read" VALUE="8"/>
+        <PARAMETER NAME="c_m_axi_num_readq" VALUE="2"/>
+        <PARAMETER NAME="c_s_axi_num_write" VALUE="8"/>
+        <PARAMETER NAME="c_s_axi_num_read" VALUE="8"/>
+        <PARAMETER NAME="pf0_msix_impl_locn" VALUE="Internal"/>
+        <PARAMETER NAME="axi_aclk_loopback" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar0_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf0_bar0_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf0_bar0_size" VALUE="128"/>
+        <PARAMETER NAME="pf0_bar0_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf0_bar0_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar0_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar1_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar1_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf0_bar1_size" VALUE="4"/>
+        <PARAMETER NAME="pf0_bar1_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf0_bar1_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar1_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar2_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar2_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf0_bar2_size" VALUE="4"/>
+        <PARAMETER NAME="pf0_bar2_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf0_bar2_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar2_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar3_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar3_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf0_bar3_size" VALUE="4"/>
+        <PARAMETER NAME="pf0_bar3_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf0_bar3_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar3_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar4_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar4_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf0_bar4_size" VALUE="4"/>
+        <PARAMETER NAME="pf0_bar4_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf0_bar4_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar4_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar5_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar5_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf0_bar5_size" VALUE="4"/>
+        <PARAMETER NAME="pf0_bar5_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf0_bar5_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar5_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pciebar2axibar_0" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pciebar2axibar_1" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pciebar2axibar_2" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pciebar2axibar_3" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pciebar2axibar_4" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pciebar2axibar_5" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pciebar2axibar_6" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="bar_indicator" VALUE="BAR_0"/>
+        <PARAMETER NAME="bar0_indicator" VALUE="1"/>
+        <PARAMETER NAME="bar1_indicator" VALUE="0"/>
+        <PARAMETER NAME="bar2_indicator" VALUE="0"/>
+        <PARAMETER NAME="bar3_indicator" VALUE="0"/>
+        <PARAMETER NAME="bar4_indicator" VALUE="0"/>
+        <PARAMETER NAME="bar5_indicator" VALUE="0"/>
+        <PARAMETER NAME="barlite2" VALUE="7"/>
+        <PARAMETER NAME="en_dbg_descramble" VALUE="false"/>
+        <PARAMETER NAME="vcu118_board" VALUE="false"/>
+        <PARAMETER NAME="tl_pf_enable_reg" VALUE="1"/>
+        <PARAMETER NAME="pf1_vendor_id" VALUE="10EE"/>
+        <PARAMETER NAME="pf1_device_id" VALUE="1041"/>
+        <PARAMETER NAME="pf1_class_code" VALUE="070001"/>
+        <PARAMETER NAME="PF1_Use_Class_Code_Lookup_Assistant" VALUE="false"/>
+        <PARAMETER NAME="pf1_base_class_menu" VALUE="Simple_communication_controllers"/>
+        <PARAMETER NAME="pf1_class_code_base" VALUE="07"/>
+        <PARAMETER NAME="pf1_class_code_sub" VALUE="00"/>
+        <PARAMETER NAME="pf1_sub_class_interface_menu" VALUE="16450_compatible_serial_controller"/>
+        <PARAMETER NAME="pf1_class_code_interface" VALUE="01"/>
+        <PARAMETER NAME="PF1_INTERRUPT_PIN" VALUE="NONE"/>
+        <PARAMETER NAME="pf1_msi_enabled" VALUE="false"/>
+        <PARAMETER NAME="PF1_MSI_CAP_MULTIMSGCAP" VALUE="1_vector"/>
+        <PARAMETER NAME="pf1_bar0_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf1_bar0_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf1_bar0_size" VALUE="32"/>
+        <PARAMETER NAME="pf1_bar0_scale" VALUE="Megabytes"/>
+        <PARAMETER NAME="pf1_bar0_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar0_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar1_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf1_bar1_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf1_bar1_size" VALUE="128"/>
+        <PARAMETER NAME="pf1_bar1_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf1_bar1_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar1_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar2_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf1_bar2_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf1_bar2_size" VALUE="128"/>
+        <PARAMETER NAME="pf1_bar2_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf1_bar2_64bit" VALUE="true"/>
+        <PARAMETER NAME="pf1_bar2_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar3_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar3_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf1_bar3_size" VALUE="128"/>
+        <PARAMETER NAME="pf1_bar3_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf1_bar3_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar3_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar4_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf1_bar4_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf1_bar4_size" VALUE="128"/>
+        <PARAMETER NAME="pf1_bar4_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf1_bar4_64bit" VALUE="true"/>
+        <PARAMETER NAME="pf1_bar4_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar5_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar5_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf1_bar5_size" VALUE="128"/>
+        <PARAMETER NAME="pf1_bar5_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf1_bar5_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf2_device_id" VALUE="1040"/>
+        <PARAMETER NAME="pf2_class_code" VALUE="058000"/>
+        <PARAMETER NAME="PF2_SUBSYSTEM_VENDOR_ID" VALUE="10EE"/>
+        <PARAMETER NAME="PF2_Use_Class_Code_Lookup_Assistant" VALUE="false"/>
+        <PARAMETER NAME="pf2_base_class_menu" VALUE="Memory_controller"/>
+        <PARAMETER NAME="pf2_class_code_base" VALUE="05"/>
+        <PARAMETER NAME="pf2_class_code_sub" VALUE="80"/>
+        <PARAMETER NAME="pf2_sub_class_interface_menu" VALUE="Other_memory_controller"/>
+        <PARAMETER NAME="pf2_class_code_interface" VALUE="00"/>
+        <PARAMETER NAME="PF2_INTERRUPT_PIN" VALUE="NONE"/>
+        <PARAMETER NAME="pf2_msi_enabled" VALUE="false"/>
+        <PARAMETER NAME="PF2_MSI_CAP_MULTIMSGCAP" VALUE="1_vector"/>
+        <PARAMETER NAME="pf2_bar0_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf2_bar0_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf2_bar0_size" VALUE="128"/>
+        <PARAMETER NAME="pf2_bar0_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf2_bar0_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar0_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar1_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf2_bar1_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf2_bar1_size" VALUE="128"/>
+        <PARAMETER NAME="pf2_bar1_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf2_bar1_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar1_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar2_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf2_bar2_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf2_bar2_size" VALUE="128"/>
+        <PARAMETER NAME="pf2_bar2_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf2_bar2_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar2_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar3_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf2_bar3_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf2_bar3_size" VALUE="128"/>
+        <PARAMETER NAME="pf2_bar3_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf2_bar3_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar3_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar4_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf2_bar4_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf2_bar4_size" VALUE="128"/>
+        <PARAMETER NAME="pf2_bar4_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf2_bar4_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar4_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar5_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf2_bar5_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf2_bar5_size" VALUE="128"/>
+        <PARAMETER NAME="pf2_bar5_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf2_bar5_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf3_device_id" VALUE="1039"/>
+        <PARAMETER NAME="pf3_class_code" VALUE="058000"/>
+        <PARAMETER NAME="PF3_SUBSYSTEM_VENDOR_ID" VALUE="10EE"/>
+        <PARAMETER NAME="PF3_Use_Class_Code_Lookup_Assistant" VALUE="false"/>
+        <PARAMETER NAME="pf3_base_class_menu" VALUE="Memory_controller"/>
+        <PARAMETER NAME="pf3_class_code_base" VALUE="05"/>
+        <PARAMETER NAME="pf3_class_code_sub" VALUE="80"/>
+        <PARAMETER NAME="pf3_sub_class_interface_menu" VALUE="Other_memory_controller"/>
+        <PARAMETER NAME="pf3_class_code_interface" VALUE="00"/>
+        <PARAMETER NAME="PF3_INTERRUPT_PIN" VALUE="NONE"/>
+        <PARAMETER NAME="pf3_msi_enabled" VALUE="false"/>
+        <PARAMETER NAME="PF3_MSI_CAP_MULTIMSGCAP" VALUE="1_vector"/>
+        <PARAMETER NAME="pf3_bar0_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf3_bar0_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf3_bar0_size" VALUE="128"/>
+        <PARAMETER NAME="pf3_bar0_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf3_bar0_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar0_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar1_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf3_bar1_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf3_bar1_size" VALUE="128"/>
+        <PARAMETER NAME="pf3_bar1_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf3_bar1_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar1_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar2_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf3_bar2_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf3_bar2_size" VALUE="128"/>
+        <PARAMETER NAME="pf3_bar2_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf3_bar2_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar2_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar3_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf3_bar3_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf3_bar3_size" VALUE="128"/>
+        <PARAMETER NAME="pf3_bar3_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf3_bar3_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar3_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar4_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf3_bar4_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf3_bar4_size" VALUE="128"/>
+        <PARAMETER NAME="pf3_bar4_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf3_bar4_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar4_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar5_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf3_bar5_type" VALUE="Memory"/>
+        <PARAMETER NAME="pf3_bar5_size" VALUE="128"/>
+        <PARAMETER NAME="pf3_bar5_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf3_bar5_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="split_dma" VALUE="false"/>
+        <PARAMETER NAME="split_dma_single_pf" VALUE="false"/>
+        <PARAMETER NAME="mult_pf_des" VALUE="false"/>
+        <PARAMETER NAME="pf_swap" VALUE="false"/>
+        <PARAMETER NAME="post_synth_sim_en" VALUE="false"/>
+        <PARAMETER NAME="two_bypass_bar" VALUE="false"/>
+        <PARAMETER NAME="en_l23_entry" VALUE="false"/>
+        <PARAMETER NAME="pf1_pciebar2axibar_0" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pf1_pciebar2axibar_1" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pf1_pciebar2axibar_2" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pf1_pciebar2axibar_3" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pf1_pciebar2axibar_4" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pf1_pciebar2axibar_5" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pf1_pciebar2axibar_6" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pf2_pciebar2axibar_0" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pf2_pciebar2axibar_1" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pf2_pciebar2axibar_2" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pf2_pciebar2axibar_3" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pf2_pciebar2axibar_4" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pf2_pciebar2axibar_5" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pf3_pciebar2axibar_0" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pf3_pciebar2axibar_1" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pf3_pciebar2axibar_2" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pf3_pciebar2axibar_3" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pf3_pciebar2axibar_4" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="pf3_pciebar2axibar_5" VALUE="0x0000000000000000"/>
+        <PARAMETER NAME="gtwiz_in_core_us" VALUE="1"/>
+        <PARAMETER NAME="gtwiz_in_core_usp" VALUE="1"/>
+        <PARAMETER NAME="dma_reset_source_sel" VALUE="User_Reset"/>
+        <PARAMETER NAME="en_dma_and_bridge" VALUE="false"/>
+        <PARAMETER NAME="en_coreclk_es1" VALUE="false"/>
+        <PARAMETER NAME="pipe_line_stage" VALUE="2"/>
+        <PARAMETER NAME="axis_pipe_line_stage" VALUE="0"/>
+        <PARAMETER NAME="vu9p_tul_ex" VALUE="false"/>
+        <PARAMETER NAME="vcu1525_ddr_ex" VALUE="false"/>
+        <PARAMETER NAME="en_bridge" VALUE="false"/>
+        <PARAMETER NAME="enable_ccix" VALUE="FALSE"/>
+        <PARAMETER NAME="enable_dvsec" VALUE="FALSE"/>
+        <PARAMETER NAME="ext_sys_clk_bufg" VALUE="false"/>
+        <PARAMETER NAME="usr_irq_exdes" VALUE="false"/>
+        <PARAMETER NAME="axi_vip_in_exdes" VALUE="false"/>
+        <PARAMETER NAME="xdma_non_incremental_exdes" VALUE="false"/>
+        <PARAMETER NAME="xdma_st_infinite_desc_exdes" VALUE="false"/>
+        <PARAMETER NAME="gtcom_in_core_usp" VALUE="2"/>
+        <PARAMETER NAME="en_mqdma" VALUE="false"/>
+        <PARAMETER NAME="SRIOV_CAP_ENABLE" VALUE="false"/>
+        <PARAMETER NAME="ext_xvc_vsec_enable" VALUE="false"/>
+        <PARAMETER NAME="acs_ext_cap_enable" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar0_enabled_mqdma" VALUE="true"/>
+        <PARAMETER NAME="pf0_bar0_type_mqdma" VALUE="DMA"/>
+        <PARAMETER NAME="pf0_bar0_64bit_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar0_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar0_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf0_bar0_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf0_bar1_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar1_type_mqdma" VALUE="N/A"/>
+        <PARAMETER NAME="pf0_bar1_64bit_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar1_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar1_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf0_bar1_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf0_bar2_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar2_type_mqdma" VALUE="N/A"/>
+        <PARAMETER NAME="pf0_bar2_64bit_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar2_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar2_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf0_bar2_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf0_bar3_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar3_type_mqdma" VALUE="N/A"/>
+        <PARAMETER NAME="pf0_bar3_64bit_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar3_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar3_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf0_bar3_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf0_bar4_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar4_type_mqdma" VALUE="N/A"/>
+        <PARAMETER NAME="pf0_bar4_64bit_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar4_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar4_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf0_bar4_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf0_bar5_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar5_type_mqdma" VALUE="N/A"/>
+        <PARAMETER NAME="pf0_bar5_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf0_bar5_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf0_bar5_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf1_bar0_enabled_mqdma" VALUE="true"/>
+        <PARAMETER NAME="pf1_bar0_type_mqdma" VALUE="DMA"/>
+        <PARAMETER NAME="pf1_bar0_64bit_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar0_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar0_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf1_bar0_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf1_bar1_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar1_type_mqdma" VALUE="N/A"/>
+        <PARAMETER NAME="pf1_bar1_64bit_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar1_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar1_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf1_bar1_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf1_bar2_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar2_type_mqdma" VALUE="N/A"/>
+        <PARAMETER NAME="pf1_bar2_64bit_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar2_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar2_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf1_bar2_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf1_bar3_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar3_type_mqdma" VALUE="N/A"/>
+        <PARAMETER NAME="pf1_bar3_64bit_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar3_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar3_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf1_bar3_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf1_bar4_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar4_type_mqdma" VALUE="N/A"/>
+        <PARAMETER NAME="pf1_bar4_64bit_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar4_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar4_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf1_bar4_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf1_bar5_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar5_type_mqdma" VALUE="N/A"/>
+        <PARAMETER NAME="pf1_bar5_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf1_bar5_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf1_bar5_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf2_bar0_enabled_mqdma" VALUE="true"/>
+        <PARAMETER NAME="pf2_bar0_type_mqdma" VALUE="DMA"/>
+        <PARAMETER NAME="pf2_bar0_64bit_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar0_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar0_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf2_bar0_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf2_bar1_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar1_type_mqdma" VALUE="N/A"/>
+        <PARAMETER NAME="pf2_bar1_64bit_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar1_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar1_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf2_bar1_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf2_bar2_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar2_type_mqdma" VALUE="N/A"/>
+        <PARAMETER NAME="pf2_bar2_64bit_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar2_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar2_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf2_bar2_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf2_bar3_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar3_type_mqdma" VALUE="N/A"/>
+        <PARAMETER NAME="pf2_bar3_64bit_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar3_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar3_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf2_bar3_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf2_bar4_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar4_type_mqdma" VALUE="N/A"/>
+        <PARAMETER NAME="pf2_bar4_64bit_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar4_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar4_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf2_bar4_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf2_bar5_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar5_type_mqdma" VALUE="N/A"/>
+        <PARAMETER NAME="pf2_bar5_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf2_bar5_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf2_bar5_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf3_bar0_enabled_mqdma" VALUE="true"/>
+        <PARAMETER NAME="pf3_bar0_type_mqdma" VALUE="DMA"/>
+        <PARAMETER NAME="pf3_bar0_64bit_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar0_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar0_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf3_bar0_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf3_bar1_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar1_type_mqdma" VALUE="N/A"/>
+        <PARAMETER NAME="pf3_bar1_64bit_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar1_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar1_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf3_bar1_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf3_bar2_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar2_type_mqdma" VALUE="N/A"/>
+        <PARAMETER NAME="pf3_bar2_64bit_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar2_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar2_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf3_bar2_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf3_bar3_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar3_type_mqdma" VALUE="N/A"/>
+        <PARAMETER NAME="pf3_bar3_64bit_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar3_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar3_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf3_bar3_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf3_bar4_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar4_type_mqdma" VALUE="N/A"/>
+        <PARAMETER NAME="pf3_bar4_64bit_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar4_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar4_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf3_bar4_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="pf3_bar5_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar5_type_mqdma" VALUE="N/A"/>
+        <PARAMETER NAME="pf3_bar5_prefetchable_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf3_bar5_scale_mqdma" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf3_bar5_size_mqdma" VALUE="128"/>
+        <PARAMETER NAME="copy_pf0" VALUE="true"/>
+        <PARAMETER NAME="copy_sriov_pf0" VALUE="true"/>
+        <PARAMETER NAME="pf0_expansion_rom_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf0_expansion_rom_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf0_expansion_rom_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf0_expansion_rom_size" VALUE="4"/>
+        <PARAMETER NAME="pf1_expansion_rom_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf1_expansion_rom_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf1_expansion_rom_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf1_expansion_rom_size" VALUE="4"/>
+        <PARAMETER NAME="pf2_expansion_rom_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf2_expansion_rom_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf2_expansion_rom_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf2_expansion_rom_size" VALUE="4"/>
+        <PARAMETER NAME="pf3_expansion_rom_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf3_expansion_rom_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf3_expansion_rom_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf3_expansion_rom_size" VALUE="4"/>
+        <PARAMETER NAME="pf0_sriov_bar0_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf0_sriov_bar0_type" VALUE="DMA"/>
+        <PARAMETER NAME="pf0_sriov_bar0_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf0_sriov_bar0_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf0_sriov_bar0_size" VALUE="2"/>
+        <PARAMETER NAME="pf0_sriov_bar0_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf0_sriov_bar1_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf0_sriov_bar1_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf0_sriov_bar1_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf0_sriov_bar1_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf0_sriov_bar1_size" VALUE="2"/>
+        <PARAMETER NAME="pf0_sriov_bar1_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf0_sriov_bar2_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf0_sriov_bar2_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf0_sriov_bar2_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf0_sriov_bar2_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf0_sriov_bar2_size" VALUE="2"/>
+        <PARAMETER NAME="pf0_sriov_bar2_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf0_sriov_bar3_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf0_sriov_bar3_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf0_sriov_bar3_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf0_sriov_bar3_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf0_sriov_bar3_size" VALUE="2"/>
+        <PARAMETER NAME="pf0_sriov_bar3_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf0_sriov_bar4_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf0_sriov_bar4_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf0_sriov_bar4_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf0_sriov_bar4_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf0_sriov_bar4_size" VALUE="2"/>
+        <PARAMETER NAME="pf0_sriov_bar4_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf0_sriov_bar5_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf0_sriov_bar5_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf0_sriov_bar5_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf0_sriov_bar5_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf0_sriov_bar5_size" VALUE="2"/>
+        <PARAMETER NAME="pf0_sriov_bar5_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf1_sriov_bar0_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf1_sriov_bar0_type" VALUE="DMA"/>
+        <PARAMETER NAME="pf1_sriov_bar0_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf1_sriov_bar0_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf1_sriov_bar0_size" VALUE="2"/>
+        <PARAMETER NAME="pf1_sriov_bar0_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf1_sriov_bar1_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf1_sriov_bar1_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf1_sriov_bar1_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf1_sriov_bar1_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf1_sriov_bar1_size" VALUE="2"/>
+        <PARAMETER NAME="pf1_sriov_bar1_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf1_sriov_bar2_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf1_sriov_bar2_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf1_sriov_bar2_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf1_sriov_bar2_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf1_sriov_bar2_size" VALUE="2"/>
+        <PARAMETER NAME="pf1_sriov_bar2_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf1_sriov_bar3_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf1_sriov_bar3_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf1_sriov_bar3_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf1_sriov_bar3_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf1_sriov_bar3_size" VALUE="2"/>
+        <PARAMETER NAME="pf1_sriov_bar3_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf1_sriov_bar4_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf1_sriov_bar4_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf1_sriov_bar4_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf1_sriov_bar4_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf1_sriov_bar4_size" VALUE="2"/>
+        <PARAMETER NAME="pf1_sriov_bar4_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf1_sriov_bar5_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf1_sriov_bar5_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf1_sriov_bar5_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf1_sriov_bar5_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf1_sriov_bar5_size" VALUE="2"/>
+        <PARAMETER NAME="pf1_sriov_bar5_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf2_sriov_bar0_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf2_sriov_bar0_type" VALUE="DMA"/>
+        <PARAMETER NAME="pf2_sriov_bar0_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf2_sriov_bar0_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf2_sriov_bar0_size" VALUE="2"/>
+        <PARAMETER NAME="pf2_sriov_bar0_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf2_sriov_bar1_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf2_sriov_bar1_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf2_sriov_bar1_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf2_sriov_bar1_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf2_sriov_bar1_size" VALUE="2"/>
+        <PARAMETER NAME="pf2_sriov_bar1_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf2_sriov_bar2_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf2_sriov_bar2_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf2_sriov_bar2_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf2_sriov_bar2_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf2_sriov_bar2_size" VALUE="2"/>
+        <PARAMETER NAME="pf2_sriov_bar2_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf2_sriov_bar3_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf2_sriov_bar3_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf2_sriov_bar3_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf2_sriov_bar3_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf2_sriov_bar3_size" VALUE="2"/>
+        <PARAMETER NAME="pf2_sriov_bar3_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf2_sriov_bar4_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf2_sriov_bar4_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf2_sriov_bar4_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf2_sriov_bar4_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf2_sriov_bar4_size" VALUE="2"/>
+        <PARAMETER NAME="pf2_sriov_bar4_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf2_sriov_bar5_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf2_sriov_bar5_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf2_sriov_bar5_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf2_sriov_bar5_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf2_sriov_bar5_size" VALUE="2"/>
+        <PARAMETER NAME="pf2_sriov_bar5_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf3_sriov_bar0_enabled" VALUE="true"/>
+        <PARAMETER NAME="pf3_sriov_bar0_type" VALUE="DMA"/>
+        <PARAMETER NAME="pf3_sriov_bar0_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf3_sriov_bar0_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf3_sriov_bar0_size" VALUE="2"/>
+        <PARAMETER NAME="pf3_sriov_bar0_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf3_sriov_bar1_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf3_sriov_bar1_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf3_sriov_bar1_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf3_sriov_bar1_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf3_sriov_bar1_size" VALUE="2"/>
+        <PARAMETER NAME="pf3_sriov_bar1_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf3_sriov_bar2_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf3_sriov_bar2_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf3_sriov_bar2_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf3_sriov_bar2_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf3_sriov_bar2_size" VALUE="2"/>
+        <PARAMETER NAME="pf3_sriov_bar2_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf3_sriov_bar3_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf3_sriov_bar3_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf3_sriov_bar3_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf3_sriov_bar3_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf3_sriov_bar3_size" VALUE="2"/>
+        <PARAMETER NAME="pf3_sriov_bar3_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf3_sriov_bar4_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf3_sriov_bar4_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf3_sriov_bar4_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf3_sriov_bar4_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf3_sriov_bar4_size" VALUE="2"/>
+        <PARAMETER NAME="pf3_sriov_bar4_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pf3_sriov_bar5_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf3_sriov_bar5_type" VALUE="N/A"/>
+        <PARAMETER NAME="pf3_sriov_bar5_64bit" VALUE="false"/>
+        <PARAMETER NAME="pf3_sriov_bar5_prefetchable" VALUE="false"/>
+        <PARAMETER NAME="pf3_sriov_bar5_size" VALUE="2"/>
+        <PARAMETER NAME="pf3_sriov_bar5_scale" VALUE="Kilobytes"/>
+        <PARAMETER NAME="pcie_id_if" VALUE="FALSE"/>
+        <PARAMETER NAME="pf0_vendor_id_mqdma" VALUE="10EE"/>
+        <PARAMETER NAME="pf1_vendor_id_mqdma" VALUE="10EE"/>
+        <PARAMETER NAME="pf2_vendor_id_mqdma" VALUE="10EE"/>
+        <PARAMETER NAME="pf3_vendor_id_mqdma" VALUE="10EE"/>
+        <PARAMETER NAME="PF0_DEVICE_ID_mqdma" VALUE="9022"/>
+        <PARAMETER NAME="PF1_DEVICE_ID_mqdma" VALUE="0007"/>
+        <PARAMETER NAME="PF2_DEVICE_ID_mqdma" VALUE="9022"/>
+        <PARAMETER NAME="PF3_DEVICE_ID_mqdma" VALUE="9022"/>
+        <PARAMETER NAME="PF0_REVISION_ID_mqdma" VALUE="00"/>
+        <PARAMETER NAME="PF1_REVISION_ID_mqdma" VALUE="00"/>
+        <PARAMETER NAME="PF2_REVISION_ID_mqdma" VALUE="00"/>
+        <PARAMETER NAME="PF3_REVISION_ID_mqdma" VALUE="00"/>
+        <PARAMETER NAME="PF0_SUBSYSTEM_VENDOR_ID_mqdma" VALUE="10EE"/>
+        <PARAMETER NAME="PF1_SUBSYSTEM_VENDOR_ID_mqdma" VALUE="10EE"/>
+        <PARAMETER NAME="PF2_SUBSYSTEM_VENDOR_ID_mqdma" VALUE="10EE"/>
+        <PARAMETER NAME="PF3_SUBSYSTEM_VENDOR_ID_mqdma" VALUE="10EE"/>
+        <PARAMETER NAME="PF0_SUBSYSTEM_ID_mqdma" VALUE="0007"/>
+        <PARAMETER NAME="PF1_SUBSYSTEM_ID_mqdma" VALUE="0007"/>
+        <PARAMETER NAME="PF2_SUBSYSTEM_ID_mqdma" VALUE="0007"/>
+        <PARAMETER NAME="PF3_SUBSYSTEM_ID_mqdma" VALUE="0007"/>
+        <PARAMETER NAME="pf0_Use_Class_Code_Lookup_Assistant_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf1_Use_Class_Code_Lookup_Assistant_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf2_Use_Class_Code_Lookup_Assistant_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf3_Use_Class_Code_Lookup_Assistant_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf0_base_class_menu_mqdma" VALUE="Memory_controller"/>
+        <PARAMETER NAME="pf0_class_code_base_mqdma" VALUE="05"/>
+        <PARAMETER NAME="pf0_class_code_sub_mqdma" VALUE="80"/>
+        <PARAMETER NAME="pf0_sub_class_interface_menu_mqdma" VALUE="Other_memory_controller"/>
+        <PARAMETER NAME="pf0_class_code_interface_mqdma" VALUE="00"/>
+        <PARAMETER NAME="pf0_class_code_mqdma" VALUE="058000"/>
+        <PARAMETER NAME="pf1_base_class_menu_mqdma" VALUE="Memory_controller"/>
+        <PARAMETER NAME="pf1_class_code_base_mqdma" VALUE="05"/>
+        <PARAMETER NAME="pf1_class_code_sub_mqdma" VALUE="80"/>
+        <PARAMETER NAME="pf1_sub_class_interface_menu_mqdma" VALUE="Other_memory_controller"/>
+        <PARAMETER NAME="pf1_class_code_interface_mqdma" VALUE="00"/>
+        <PARAMETER NAME="pf1_class_code_mqdma" VALUE="058000"/>
+        <PARAMETER NAME="pf2_base_class_menu_mqdma" VALUE="Memory_controller"/>
+        <PARAMETER NAME="pf2_class_code_base_mqdma" VALUE="05"/>
+        <PARAMETER NAME="pf2_class_code_sub_mqdma" VALUE="80"/>
+        <PARAMETER NAME="pf2_sub_class_interface_menu_mqdma" VALUE="Other_memory_controller"/>
+        <PARAMETER NAME="pf2_class_code_interface_mqdma" VALUE="00"/>
+        <PARAMETER NAME="pf2_class_code_mqdma" VALUE="058000"/>
+        <PARAMETER NAME="pf3_base_class_menu_mqdma" VALUE="Memory_controller"/>
+        <PARAMETER NAME="pf3_class_code_base_mqdma" VALUE="05"/>
+        <PARAMETER NAME="pf3_class_code_sub_mqdma" VALUE="80"/>
+        <PARAMETER NAME="pf3_sub_class_interface_menu_mqdma" VALUE="Other_memory_controller"/>
+        <PARAMETER NAME="pf3_class_code_interface_mqdma" VALUE="00"/>
+        <PARAMETER NAME="pf3_class_code_mqdma" VALUE="058000"/>
+        <PARAMETER NAME="SRIOV_FIRST_VF_OFFSET" VALUE="1"/>
+        <PARAMETER NAME="pf0_sriov_cap_ver" VALUE="1"/>
+        <PARAMETER NAME="PF0_SRIOV_CAP_INITIAL_VF" VALUE="0"/>
+        <PARAMETER NAME="PF0_SRIOV_FUNC_DEP_LINK" VALUE="0000"/>
+        <PARAMETER NAME="PF0_SRIOV_FIRST_VF_OFFSET" VALUE="0"/>
+        <PARAMETER NAME="PF0_SRIOV_VF_DEVICE_ID" VALUE="0000"/>
+        <PARAMETER NAME="PF0_SRIOV_SUPPORTED_PAGE_SIZE" VALUE="00000553"/>
+        <PARAMETER NAME="PF1_SRIOV_CAP_VER" VALUE="1"/>
+        <PARAMETER NAME="PF1_SRIOV_CAP_INITIAL_VF" VALUE="0"/>
+        <PARAMETER NAME="PF1_SRIOV_FIRST_VF_OFFSET" VALUE="0"/>
+        <PARAMETER NAME="PF1_SRIOV_FUNC_DEP_LINK" VALUE="0001"/>
+        <PARAMETER NAME="PF1_SRIOV_SUPPORTED_PAGE_SIZE" VALUE="00000553"/>
+        <PARAMETER NAME="PF1_SRIOV_VF_DEVICE_ID" VALUE="0000"/>
+        <PARAMETER NAME="PF2_SRIOV_CAP_VER" VALUE="1"/>
+        <PARAMETER NAME="PF2_SRIOV_CAP_INITIAL_VF" VALUE="0"/>
+        <PARAMETER NAME="PF2_SRIOV_FIRST_VF_OFFSET" VALUE="0"/>
+        <PARAMETER NAME="PF2_SRIOV_FUNC_DEP_LINK" VALUE="0002"/>
+        <PARAMETER NAME="PF2_SRIOV_SUPPORTED_PAGE_SIZE" VALUE="00000553"/>
+        <PARAMETER NAME="PF2_SRIOV_VF_DEVICE_ID" VALUE="0000"/>
+        <PARAMETER NAME="PF3_SRIOV_CAP_INITIAL_VF" VALUE="0"/>
+        <PARAMETER NAME="PF3_SRIOV_CAP_VER" VALUE="1"/>
+        <PARAMETER NAME="PF3_SRIOV_FIRST_VF_OFFSET" VALUE="0"/>
+        <PARAMETER NAME="PF3_SRIOV_FUNC_DEP_LINK" VALUE="0003"/>
+        <PARAMETER NAME="PF3_SRIOV_SUPPORTED_PAGE_SIZE" VALUE="00000553"/>
+        <PARAMETER NAME="PF3_SRIOV_VF_DEVICE_ID" VALUE="0000"/>
+        <PARAMETER NAME="pf0_ari_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf0_msix_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf1_msix_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf2_msix_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="pf3_msix_enabled_mqdma" VALUE="false"/>
+        <PARAMETER NAME="PF0_MSIX_CAP_TABLE_SIZE_mqdma" VALUE="000"/>
+        <PARAMETER NAME="PF1_MSIX_CAP_TABLE_SIZE_mqdma" VALUE="000"/>
+        <PARAMETER NAME="PF2_MSIX_CAP_TABLE_SIZE_mqdma" VALUE="000"/>
+        <PARAMETER NAME="PF3_MSIX_CAP_TABLE_SIZE_mqdma" VALUE="000"/>
+        <PARAMETER NAME="PF0_MSIX_CAP_TABLE_OFFSET_mqdma" VALUE="00000000"/>
+        <PARAMETER NAME="PF1_MSIX_CAP_TABLE_OFFSET_mqdma" VALUE="00000000"/>
+        <PARAMETER NAME="PF2_MSIX_CAP_TABLE_OFFSET_mqdma" VALUE="00000000"/>
+        <PARAMETER NAME="PF3_MSIX_CAP_TABLE_OFFSET_mqdma" VALUE="00000000"/>
+        <PARAMETER NAME="PF0_MSIX_CAP_TABLE_BIR_mqdma" VALUE="BAR_0"/>
+        <PARAMETER NAME="PF1_MSIX_CAP_TABLE_BIR_mqdma" VALUE="BAR_0"/>
+        <PARAMETER NAME="PF2_MSIX_CAP_TABLE_BIR_mqdma" VALUE="BAR_0"/>
+        <PARAMETER NAME="PF3_MSIX_CAP_TABLE_BIR_mqdma" VALUE="BAR_0"/>
+        <PARAMETER NAME="PF0_MSIX_CAP_PBA_OFFSET_mqdma" VALUE="00000000"/>
+        <PARAMETER NAME="PF1_MSIX_CAP_PBA_OFFSET_mqdma" VALUE="00000000"/>
+        <PARAMETER NAME="PF2_MSIX_CAP_PBA_OFFSET_mqdma" VALUE="00000000"/>
+        <PARAMETER NAME="PF3_MSIX_CAP_PBA_OFFSET_mqdma" VALUE="00000000"/>
+        <PARAMETER NAME="PF0_MSIX_CAP_PBA_BIR_mqdma" VALUE="BAR_0"/>
+        <PARAMETER NAME="PF1_MSIX_CAP_PBA_BIR_mqdma" VALUE="BAR_0"/>
+        <PARAMETER NAME="PF2_MSIX_CAP_PBA_BIR_mqdma" VALUE="BAR_0"/>
+        <PARAMETER NAME="PF3_MSIX_CAP_PBA_BIR_mqdma" VALUE="BAR_0"/>
+        <PARAMETER NAME="MSI_X_OPTIONS" VALUE="None"/>
+        <PARAMETER NAME="dsc_bypass_rd_out" VALUE="0000"/>
+        <PARAMETER NAME="dsc_bypass_wr_out" VALUE="0000"/>
+        <PARAMETER NAME="num_queues" VALUE="1"/>
+        <PARAMETER NAME="enable_auto_rxeq" VALUE="False"/>
+        <PARAMETER NAME="enable_pcie_debug" VALUE="False"/>
+        <PARAMETER NAME="axisten_if_enable_msg_route" VALUE="27FFF"/>
+        <PARAMETER NAME="en_axi_mm_mqdma" VALUE="true"/>
+        <PARAMETER NAME="en_axi_st_mqdma" VALUE="false"/>
+        <PARAMETER NAME="enable_more_clk" VALUE="false"/>
+        <PARAMETER NAME="tl_credits_cd" VALUE="15"/>
+        <PARAMETER NAME="tl_credits_ch" VALUE="15"/>
+        <PARAMETER NAME="set_finite_credit" VALUE="false"/>
+        <PARAMETER NAME="disable_bram_pipeline" VALUE="false"/>
+        <PARAMETER NAME="disable_eq_synchronizer" VALUE="false"/>
+        <PARAMETER NAME="enable_resource_reduction" VALUE="false"/>
+        <PARAMETER NAME="c_ats_enable" VALUE="false"/>
+        <PARAMETER NAME="c_pri_enable" VALUE="false"/>
+        <PARAMETER NAME="usplus_es1_seqnum_bypass" VALUE="false"/>
+        <PARAMETER NAME="bridge_registers_offset_enable" VALUE="false"/>
+        <PARAMETER NAME="enable_gen4" VALUE="true"/>
+        <PARAMETER NAME="local_test" VALUE="false"/>
+        <PARAMETER NAME="gen4_eieos_0s7" VALUE="true"/>
+        <PARAMETER NAME="c_s_axi_supports_narrow_burst" VALUE="false"/>
+        <PARAMETER NAME="enable_ats_switch" VALUE="FALSE"/>
+        <PARAMETER NAME="c_ats_switch_unique_bdf" VALUE="1"/>
+        <PARAMETER NAME="ctrl_skip_mask" VALUE="true"/>
+        <PARAMETER NAME="pf0_ats_enabled" VALUE="false"/>
+        <PARAMETER NAME="pf0_pri_enabled" VALUE="false"/>
+        <PARAMETER NAME="aspm_support" VALUE="No_ASPM"/>
+        <PARAMETER NAME="pf0_aer_cap_ecrc_gen_and_check_capable" VALUE="false"/>
+        <PARAMETER NAME="gen_pipe_debug" VALUE="false"/>
+        <PARAMETER NAME="soft_reset_en" VALUE="false"/>
+        <PARAMETER NAME="msi_rx_pin_en" VALUE="FALSE"/>
+        <PARAMETER NAME="msix_rx_pin_en" VALUE="TRUE"/>
+        <PARAMETER NAME="msix_rx_decode_en" VALUE="FALSE"/>
+        <PARAMETER NAME="intx_rx_pin_en" VALUE="true"/>
+        <PARAMETER NAME="msix_type" VALUE="HARD"/>
+        <PARAMETER NAME="runbit_fix" VALUE="false"/>
+        <PARAMETER NAME="axsize_byte_access_en" VALUE="false"/>
+        <PARAMETER NAME="enable_lane_reversal" VALUE="false"/>
+        <PARAMETER NAME="enable_mark_debug" VALUE="false"/>
+        <PARAMETER NAME="master_cal_only" VALUE="false"/>
+        <PARAMETER NAME="enable_multi_pcie" VALUE="false"/>
+        <PARAMETER NAME="rbar_enable" VALUE="false"/>
+        <PARAMETER NAME="pf0_rbar_num" VALUE="1"/>
+        <PARAMETER NAME="pf1_rbar_num" VALUE="1"/>
+        <PARAMETER NAME="pf2_rbar_num" VALUE="1"/>
+        <PARAMETER NAME="pf3_rbar_num" VALUE="1"/>
+        <PARAMETER NAME="pf0_bar0_index" VALUE="0"/>
+        <PARAMETER NAME="pf0_bar1_index" VALUE="7"/>
+        <PARAMETER NAME="pf0_bar2_index" VALUE="7"/>
+        <PARAMETER NAME="pf0_bar3_index" VALUE="7"/>
+        <PARAMETER NAME="pf0_bar4_index" VALUE="7"/>
+        <PARAMETER NAME="pf0_bar5_index" VALUE="7"/>
+        <PARAMETER NAME="pf1_bar0_index" VALUE="0"/>
+        <PARAMETER NAME="pf1_bar1_index" VALUE="7"/>
+        <PARAMETER NAME="pf1_bar2_index" VALUE="7"/>
+        <PARAMETER NAME="pf1_bar3_index" VALUE="7"/>
+        <PARAMETER NAME="pf1_bar4_index" VALUE="7"/>
+        <PARAMETER NAME="pf1_bar5_index" VALUE="7"/>
+        <PARAMETER NAME="pf2_bar0_index" VALUE="0"/>
+        <PARAMETER NAME="pf2_bar1_index" VALUE="7"/>
+        <PARAMETER NAME="pf2_bar2_index" VALUE="7"/>
+        <PARAMETER NAME="pf2_bar3_index" VALUE="7"/>
+        <PARAMETER NAME="pf2_bar4_index" VALUE="7"/>
+        <PARAMETER NAME="pf2_bar5_index" VALUE="7"/>
+        <PARAMETER NAME="pf3_bar0_index" VALUE="0"/>
+        <PARAMETER NAME="pf3_bar1_index" VALUE="7"/>
+        <PARAMETER NAME="pf3_bar2_index" VALUE="7"/>
+        <PARAMETER NAME="pf3_bar3_index" VALUE="7"/>
+        <PARAMETER NAME="pf3_bar4_index" VALUE="7"/>
+        <PARAMETER NAME="pf3_bar5_index" VALUE="7"/>
+        <PARAMETER NAME="pf0_rbar_cap_bar0" VALUE="0x00000000fff0"/>
+        <PARAMETER NAME="pf0_rbar_cap_bar1" VALUE="0x000000000000"/>
+        <PARAMETER NAME="pf0_rbar_cap_bar2" VALUE="0x000000000000"/>
+        <PARAMETER NAME="pf0_rbar_cap_bar3" VALUE="0x000000000000"/>
+        <PARAMETER NAME="pf0_rbar_cap_bar4" VALUE="0x000000000000"/>
+        <PARAMETER NAME="pf0_rbar_cap_bar5" VALUE="0x000000000000"/>
+        <PARAMETER NAME="pf1_rbar_cap_bar0" VALUE="0x00000000fff0"/>
+        <PARAMETER NAME="pf1_rbar_cap_bar1" VALUE="0x000000000000"/>
+        <PARAMETER NAME="pf1_rbar_cap_bar2" VALUE="0x000000000000"/>
+        <PARAMETER NAME="pf1_rbar_cap_bar3" VALUE="0x000000000000"/>
+        <PARAMETER NAME="pf1_rbar_cap_bar4" VALUE="0x000000000000"/>
+        <PARAMETER NAME="pf1_rbar_cap_bar5" VALUE="0x000000000000"/>
+        <PARAMETER NAME="pf2_rbar_cap_bar0" VALUE="0x00000000fff0"/>
+        <PARAMETER NAME="pf2_rbar_cap_bar1" VALUE="0x000000000000"/>
+        <PARAMETER NAME="pf2_rbar_cap_bar2" VALUE="0x000000000000"/>
+        <PARAMETER NAME="pf2_rbar_cap_bar3" VALUE="0x000000000000"/>
+        <PARAMETER NAME="pf2_rbar_cap_bar4" VALUE="0x000000000000"/>
+        <PARAMETER NAME="pf2_rbar_cap_bar5" VALUE="0x000000000000"/>
+        <PARAMETER NAME="pf3_rbar_cap_bar0" VALUE="0x00000000fff0"/>
+        <PARAMETER NAME="pf3_rbar_cap_bar1" VALUE="0x000000000000"/>
+        <PARAMETER NAME="pf3_rbar_cap_bar2" VALUE="0x000000000000"/>
+        <PARAMETER NAME="pf3_rbar_cap_bar3" VALUE="0x000000000000"/>
+        <PARAMETER NAME="pf3_rbar_cap_bar4" VALUE="0x000000000000"/>
+        <PARAMETER NAME="pf3_rbar_cap_bar5" VALUE="0x000000000000"/>
+        <PARAMETER NAME="mpsoc_pl_rp_enable" VALUE="false"/>
+        <PARAMETER NAME="c_smmu_en" VALUE="0"/>
+        <PARAMETER NAME="enable_slave_read_64os" VALUE="false"/>
+        <PARAMETER NAME="disable_gt_loc" VALUE="false"/>
+        <PARAMETER NAME="use_standard_interfaces" VALUE="false"/>
+        <PARAMETER NAME="dma_2rp" VALUE="false"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="sys_clk" SIGIS="clk" SIGNAME="util_ds_buf_IBUF_OUT">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="util_ds_buf" PORT="IBUF_OUT"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="sys_rst_n" SIGIS="rst" SIGNAME="External_Ports_pcie_rst_n">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="pcie_rst_n"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="user_lnk_up" SIGIS="undef" SIGNAME="xdma_0_user_lnk_up">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="lnk_up_led"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="1" NAME="pci_exp_txp" RIGHT="0" SIGIS="undef" SIGNAME="xdma_0_pci_exp_txp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="design_1_imp" PORT="pcie_mgt_txp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="1" NAME="pci_exp_txn" RIGHT="0" SIGIS="undef" SIGNAME="xdma_0_pci_exp_txn">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="design_1_imp" PORT="pcie_mgt_txn"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="1" NAME="pci_exp_rxp" RIGHT="0" SIGIS="undef" SIGNAME="xdma_0_pci_exp_rxp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="design_1_imp" PORT="pcie_mgt_rxp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="1" NAME="pci_exp_rxn" RIGHT="0" SIGIS="undef" SIGNAME="xdma_0_pci_exp_rxn">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="design_1_imp" PORT="pcie_mgt_rxn"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT CLKFREQUENCY="125000000" DIR="O" NAME="axi_aclk" SIGIS="clk" SIGNAME="xdma_0_axi_aclk">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_aclk"/>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="ACLK"/>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="M00_ACLK"/>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_ACLK"/>
+            <CONNECTION INSTANCE="axis_data_fifo_1" PORT="s_axis_aclk"/>
+            <CONNECTION INSTANCE="axis_data_fifo_0" PORT="s_axis_aclk"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="axi_aresetn" SIGIS="rst" SIGNAME="xdma_0_axi_aresetn">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="s_axi_aresetn"/>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="ARESETN"/>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="M00_ARESETN"/>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_ARESETN"/>
+            <CONNECTION INSTANCE="axis_data_fifo_0" PORT="s_axis_aresetn"/>
+            <CONNECTION INSTANCE="axis_data_fifo_1" PORT="s_axis_aresetn"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="0" NAME="usr_irq_req" RIGHT="0" SIGIS="undef"/>
+        <PORT DIR="O" LEFT="0" NAME="usr_irq_ack" RIGHT="0" SIGIS="undef"/>
+        <PORT DIR="O" NAME="msi_enable" SIGIS="undef"/>
+        <PORT DIR="O" NAME="msix_enable" SIGIS="undef"/>
+        <PORT DIR="O" LEFT="2" NAME="msi_vector_width" RIGHT="0" SIGIS="undef"/>
+        <PORT DIR="O" LEFT="31" NAME="m_axil_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_awaddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_AXI_awaddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="2" NAME="m_axil_awprot" RIGHT="0" SIGIS="undef"/>
+        <PORT DIR="O" NAME="m_axil_awvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_awvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_AXI_awvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axil_awready" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_awready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_AXI_awready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="m_axil_wdata" RIGHT="0" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_wdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_AXI_wdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="3" NAME="m_axil_wstrb" RIGHT="0" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_wstrb">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_AXI_wstrb"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axil_wvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_wvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_AXI_wvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axil_wready" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_wready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_AXI_wready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axil_bvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_bvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_AXI_bvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="1" NAME="m_axil_bresp" RIGHT="0" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_bresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_AXI_bresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axil_bready" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_bready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_AXI_bready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="m_axil_araddr" RIGHT="0" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_araddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_AXI_araddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="2" NAME="m_axil_arprot" RIGHT="0" SIGIS="undef"/>
+        <PORT DIR="O" NAME="m_axil_arvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_arvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_AXI_arvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axil_arready" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_arready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_AXI_arready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="31" NAME="m_axil_rdata" RIGHT="0" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_rdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_AXI_rdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="1" NAME="m_axil_rresp" RIGHT="0" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_rresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_AXI_rresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axil_rvalid" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_rvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_AXI_rvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axil_rready" SIGIS="undef" SIGNAME="axi_interconnect_0_S00_AXI_rready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_AXI_rready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="63" NAME="s_axis_c2h_tdata_0" RIGHT="0" SIGIS="undef" SIGNAME="axis_data_fifo_0_m_axis_tdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axis_data_fifo_0" PORT="m_axis_tdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axis_c2h_tlast_0" SIGIS="undef"/>
+        <PORT DIR="I" NAME="s_axis_c2h_tvalid_0" SIGIS="undef" SIGNAME="axis_data_fifo_0_m_axis_tvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axis_data_fifo_0" PORT="m_axis_tvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="s_axis_c2h_tready_0" SIGIS="undef" SIGNAME="axis_data_fifo_0_m_axis_tready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axis_data_fifo_0" PORT="m_axis_tready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="7" NAME="s_axis_c2h_tkeep_0" RIGHT="0" SIGIS="undef"/>
+        <PORT DIR="O" LEFT="63" NAME="m_axis_h2c_tdata_0" RIGHT="0" SIGIS="undef" SIGNAME="axis_data_fifo_1_s_axis_tdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axis_data_fifo_1" PORT="s_axis_tdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axis_h2c_tlast_0" SIGIS="undef"/>
+        <PORT DIR="O" NAME="m_axis_h2c_tvalid_0" SIGIS="undef" SIGNAME="axis_data_fifo_1_s_axis_tvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axis_data_fifo_1" PORT="s_axis_tvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axis_h2c_tready_0" SIGIS="undef" SIGNAME="axis_data_fifo_1_s_axis_tready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axis_data_fifo_1" PORT="s_axis_tready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="7" NAME="m_axis_h2c_tkeep_0" RIGHT="0" SIGIS="undef"/>
+      </PORTS>
+      <BUSINTERFACES>
+        <BUSINTERFACE BUSNAME="xdma_0_M_AXI_LITE" DATAWIDTH="32" NAME="M_AXI_LITE" TYPE="MASTER" VLNV="xilinx.com:interface:aximm:1.0">
+          <PARAMETER NAME="NUM_READ_OUTSTANDING" VALUE="1"/>
+          <PARAMETER NAME="NUM_WRITE_OUTSTANDING" VALUE="1"/>
+          <PARAMETER NAME="SUPPORTS_NARROW_BURST" VALUE="0"/>
+          <PARAMETER NAME="DATA_WIDTH" VALUE="32"/>
+          <PARAMETER NAME="PROTOCOL" VALUE="AXI4LITE"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="125000000"/>
+          <PARAMETER NAME="ID_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="ADDR_WIDTH" VALUE="32"/>
+          <PARAMETER NAME="AWUSER_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="ARUSER_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="WUSER_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="RUSER_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="BUSER_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="READ_WRITE_MODE" VALUE="READ_WRITE"/>
+          <PARAMETER NAME="HAS_BURST" VALUE="0"/>
+          <PARAMETER NAME="HAS_LOCK" VALUE="0"/>
+          <PARAMETER NAME="HAS_PROT" VALUE="1"/>
+          <PARAMETER NAME="HAS_CACHE" VALUE="0"/>
+          <PARAMETER NAME="HAS_QOS" VALUE="0"/>
+          <PARAMETER NAME="HAS_REGION" VALUE="0"/>
+          <PARAMETER NAME="HAS_WSTRB" VALUE="1"/>
+          <PARAMETER NAME="HAS_BRESP" VALUE="1"/>
+          <PARAMETER NAME="HAS_RRESP" VALUE="1"/>
+          <PARAMETER NAME="MAX_BURST_LENGTH" VALUE="1"/>
+          <PARAMETER NAME="PHASE" VALUE="0.000"/>
+          <PARAMETER NAME="CLK_DOMAIN" VALUE="design_1_xdma_0_0_axi_aclk"/>
+          <PARAMETER NAME="NUM_READ_THREADS" VALUE="1"/>
+          <PARAMETER NAME="NUM_WRITE_THREADS" VALUE="1"/>
+          <PARAMETER NAME="RUSER_BITS_PER_BYTE" VALUE="0"/>
+          <PARAMETER NAME="WUSER_BITS_PER_BYTE" VALUE="0"/>
+          <PARAMETER NAME="INSERT_VIP" VALUE="0"/>
+          <PORTMAPS>
+            <PORTMAP LOGICAL="ARADDR" PHYSICAL="m_axil_araddr"/>
+            <PORTMAP LOGICAL="ARPROT" PHYSICAL="m_axil_arprot"/>
+            <PORTMAP LOGICAL="ARREADY" PHYSICAL="m_axil_arready"/>
+            <PORTMAP LOGICAL="ARVALID" PHYSICAL="m_axil_arvalid"/>
+            <PORTMAP LOGICAL="AWADDR" PHYSICAL="m_axil_awaddr"/>
+            <PORTMAP LOGICAL="AWPROT" PHYSICAL="m_axil_awprot"/>
+            <PORTMAP LOGICAL="AWREADY" PHYSICAL="m_axil_awready"/>
+            <PORTMAP LOGICAL="AWVALID" PHYSICAL="m_axil_awvalid"/>
+            <PORTMAP LOGICAL="BREADY" PHYSICAL="m_axil_bready"/>
+            <PORTMAP LOGICAL="BRESP" PHYSICAL="m_axil_bresp"/>
+            <PORTMAP LOGICAL="BVALID" PHYSICAL="m_axil_bvalid"/>
+            <PORTMAP LOGICAL="RDATA" PHYSICAL="m_axil_rdata"/>
+            <PORTMAP LOGICAL="RREADY" PHYSICAL="m_axil_rready"/>
+            <PORTMAP LOGICAL="RRESP" PHYSICAL="m_axil_rresp"/>
+            <PORTMAP LOGICAL="RVALID" PHYSICAL="m_axil_rvalid"/>
+            <PORTMAP LOGICAL="WDATA" PHYSICAL="m_axil_wdata"/>
+            <PORTMAP LOGICAL="WREADY" PHYSICAL="m_axil_wready"/>
+            <PORTMAP LOGICAL="WSTRB" PHYSICAL="m_axil_wstrb"/>
+            <PORTMAP LOGICAL="WVALID" PHYSICAL="m_axil_wvalid"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+        <BUSINTERFACE BUSNAME="axis_data_fifo_0_M_AXIS" NAME="S_AXIS_C2H_0" TYPE="TARGET" VLNV="xilinx.com:interface:axis:1.0">
+          <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="8"/>
+          <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
+          <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
+          <PARAMETER NAME="HAS_TKEEP" VALUE="1"/>
+          <PARAMETER NAME="HAS_TLAST" VALUE="1"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="125000000"/>
+          <PARAMETER NAME="PHASE" VALUE="0.000"/>
+          <PARAMETER NAME="CLK_DOMAIN" VALUE="design_1_xdma_0_0_axi_aclk"/>
+          <PARAMETER NAME="LAYERED_METADATA" VALUE="undef"/>
+          <PARAMETER NAME="INSERT_VIP" VALUE="0"/>
+          <PORTMAPS>
+            <PORTMAP LOGICAL="TDATA" PHYSICAL="s_axis_c2h_tdata_0"/>
+            <PORTMAP LOGICAL="TKEEP" PHYSICAL="s_axis_c2h_tkeep_0"/>
+            <PORTMAP LOGICAL="TLAST" PHYSICAL="s_axis_c2h_tlast_0"/>
+            <PORTMAP LOGICAL="TREADY" PHYSICAL="s_axis_c2h_tready_0"/>
+            <PORTMAP LOGICAL="TVALID" PHYSICAL="s_axis_c2h_tvalid_0"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+        <BUSINTERFACE BUSNAME="xdma_0_M_AXIS_H2C_0" NAME="M_AXIS_H2C_0" TYPE="INITIATOR" VLNV="xilinx.com:interface:axis:1.0">
+          <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="8"/>
+          <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
+          <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
+          <PARAMETER NAME="HAS_TKEEP" VALUE="1"/>
+          <PARAMETER NAME="HAS_TLAST" VALUE="1"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="125000000"/>
+          <PARAMETER NAME="PHASE" VALUE="0.000"/>
+          <PARAMETER NAME="CLK_DOMAIN" VALUE="design_1_xdma_0_0_axi_aclk"/>
+          <PARAMETER NAME="LAYERED_METADATA" VALUE="undef"/>
+          <PARAMETER NAME="INSERT_VIP" VALUE="0"/>
+          <PORTMAPS>
+            <PORTMAP LOGICAL="TDATA" PHYSICAL="m_axis_h2c_tdata_0"/>
+            <PORTMAP LOGICAL="TKEEP" PHYSICAL="m_axis_h2c_tkeep_0"/>
+            <PORTMAP LOGICAL="TLAST" PHYSICAL="m_axis_h2c_tlast_0"/>
+            <PORTMAP LOGICAL="TREADY" PHYSICAL="m_axis_h2c_tready_0"/>
+            <PORTMAP LOGICAL="TVALID" PHYSICAL="m_axis_h2c_tvalid_0"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+        <BUSINTERFACE BUSNAME="xdma_0_pcie_mgt" NAME="pcie_mgt" TYPE="INITIATOR" VLNV="xilinx.com:interface:pcie_7x_mgt:1.0">
+          <PORTMAPS>
+            <PORTMAP LOGICAL="rxn" PHYSICAL="pci_exp_rxn"/>
+            <PORTMAP LOGICAL="rxp" PHYSICAL="pci_exp_rxp"/>
+            <PORTMAP LOGICAL="txn" PHYSICAL="pci_exp_txn"/>
+            <PORTMAP LOGICAL="txp" PHYSICAL="pci_exp_txp"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+      </BUSINTERFACES>
+      <MEMORYMAP>
+        <MEMRANGE ADDRESSBLOCK="Reg" BASENAME="C_BASEADDR" BASEVALUE="0x40000000" HIGHNAME="C_HIGHADDR" HIGHVALUE="0x4000FFFF" INSTANCE="axi_gpio_0" IS_DATA="TRUE" IS_INSTRUCTION="TRUE" MASTERBUSINTERFACE="M_AXI_LITE" MEMTYPE="REGISTER" SLAVEBUSINTERFACE="S_AXI"/>
+      </MEMORYMAP>
+      <PERIPHERALS>
+        <PERIPHERAL INSTANCE="axi_gpio_0"/>
+        <PERIPHERAL INSTANCE="axis_data_fifo_1"/>
+      </PERIPHERALS>
+    </MODULE>
+  </MODULES>
+
+</EDKSYSTEM>
