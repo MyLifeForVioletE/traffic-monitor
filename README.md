@@ -181,14 +181,3 @@ trafficd/
 └── config.yaml.example
 ```
 
-## 🤝 贡献指南
-
-欢迎提交 Issue 和 Pull Request！
-
-## 📄 许可证
-
-MIT License - 详见 [LICENSE](LICENSE) 文件。
-
----
-
-**⚠️ 注意**: 本项目仅用于合法的网络管理和安全监控用途，请确保遵守您所在地区的网络法律法规。
