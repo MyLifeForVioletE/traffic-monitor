@@ -1,0 +1,155 @@
+# FPGA Traffic Monitor
+
+基于Xilinx FPGA的高速网络流量监控系统，支持双路千兆以太网采集和PCIe DMA高速数据传输。
+
+## 项目概述
+
+本项目实现了一个基于FPGA的网络流量监控平台，通过RGMII接口采集两路千兆以太网数据，在FPGA内进行UDP协议解析和处理，然后通过PCIe Gen2 x2接口将数据高速传输到主机内存。
+
+## 硬件架构
+
+### 主要功能模块
+
+| 模块 | 功能描述 |
+|------|----------|
+| **双路RGMII以太网接口** | 支持两路10/100/1000Mbps以太网数据采集 |
+| **GMII <-> RGMII转换** | 实现RGMII接口到GMII接口的时序转换和数据位宽转换 |
+| **UDP协议解析引擎** | 硬件解析以太网帧、IP头、UDP头，提取源/目的IP地址 |
+| **PCIe XDMA引擎** | Xilinx XDMA PCIe Gen2 x2，实现高速DMA数据传输 |
+| **时钟管理模块** | 提供系统时钟、200MHz IDELAY参考时钟、125MHz以太网时钟 |
+| **AXI-Stream FIFO** | 用于跨时钟域数据缓存和速率匹配 |
+
+### 顶层接口信号
+
+**以太网接口1（ETH1）**
+- `eth1_rxc` - RGMII接收时钟
+- `eth1_rx_ctl` - RGMII接收控制信号
+- `eth1_rxd[3:0]` - RGMII接收数据（4bit DDR）
+- `eth1_txc` - RGMII发送时钟
+- `eth1_tx_ctl` - RGMII发送控制信号
+- `eth1_txd[3:0]` - RGMII发送数据
+
+**以太网接口2（ETH2）**
+- `eth2_rxc` - RGMII接收时钟  
+- `eth2_rx_ctl` - RGMII接收控制信号
+- `eth2_rxd[3:0]` - RGMII接收数据
+- `eth2_txc` - RGMII发送时钟
+- `eth2_tx_ctl` - RGMII发送控制信号
+- `eth2_txd[3:0]` - RGMII发送数据
+- `eth2_rst_n` - PHY芯片复位信号
+
+**PCIe接口**
+- `pcie_ref_clk_p/n` - PCIe参考时钟差分对（100MHz）
+- `pcie_rst_n` - PCIe复位信号
+- `pcie_mgt_rxp/n[1:0]` - PCIe接收差分对（2通道）
+- `pcie_mgt_txp/n[1:0]` - PCIe发送差分对（2通道）
+
+**系统接口**
+- `sys_clk` - 系统时钟输入（50MHz）
+- `sys_rst_n` - 系统复位，低电平有效
+
+## 目录结构
+
+```
+FPGA/
+├── pcie_test_4.xpr              # Vivado工程文件
+├── pcie_test_4.srcs/
+│   ├── sources_1/
+│   │   ├── new/                 # 用户自定义Verilog源码
+│   │   │   ├── udp_top.v        # UDP协议解析顶层
+│   │   │   ├── udp_rx.v         # UDP接收模块
+│   │   │   ├── gmii_2_rgmii.v   # GMII/RGMII转换
+│   │   │   ├── gmii_to_rgmii.v  # GMII/RGMII转换（第二版）
+│   │   │   ├── rgmii_rx1.v      # RGMII接收通道1
+│   │   │   ├── rgmii_rx2.v      # RGMII接收通道2
+│   │   │   ├── rgmii_tx1.v      # RGMII发送通道1
+│   │   │   └── rgmii_tx2.v      # RGMII发送通道2
+│   │   ├── bd/design_1/         # Block Design 框图设计
+│   │   │   ├── hdl/
+│   │   │   │   └── design_1_wrapper.v  # 顶层封装
+│   │   │   └── ip/              # BD例化的IP核
+│   │   └── ip/                   # 用户IP核
+│   │       ├── clk_wiz_0        # 时钟管理IP 125MHz
+│   │       ├── clk_wiz_1        # 时钟管理IP 200MHz
+│   │       └── fifo_generator_0 # FIFO生成器
+│   ├── constrs_1/new/pins.xdc   # 引脚约束文件
+│   └── sim_1/new/udp_top_tb.v   # UDP模块Testbench
+├── pcie_test_4.ip_user_files/   # IP用户文件
+├── pcie_test_4.cache/           # Vivado缓存
+├── pcie_test_4.hw/              # 硬件配置文件
+└── pcie_test_4.runs/            # 运行结果（综合/实现）
+```
+
+## 模块设计说明
+
+### 1. UDP协议解析模块 (udp_rx.v)
+
+采用Moore型状态机实现UDP协议深度解析：
+
+**状态定义**
+- `st_idle` - 空闲状态，等待前导码
+- `st_preamble` - 解析以太网前导码
+- `st_eth_head` - 解析以太网帧头，提取目的MAC、帧类型
+- `st_ip_head` - 解析IP首部，提取源IP、目的IP
+- `st_udp_head` - 解析UDP首部
+- `st_rx_data` - 接收UDP payload数据
+- `st_rx_end` - 帧结束处理
+
+**关键特性**
+- 8bit转32bit数据位宽转换
+- 自动过滤非IP/UDP数据包
+- 输出源IP/目的IP地址
+- 输出接收完成标志和字节计数
+
+### 2. RGMII接口模块
+
+**接收通道 (rgmii_rx.v)**
+- 使用IDELAYE2进行输入延迟调整
+- 使用IDDR进行DDR数据采集（双沿采样）
+- 支持200MHz IDELAYCTRL参考时钟
+- 实现RGMII 4bit DDR到GMII 8bit SDR转换
+
+**发送通道 (rgmii_tx.v)**
+- 使用ODDR进行DDR数据输出
+- 实现GMII 8bit到RGMII 4bit DDR转换
+
+### 3. PCIe XDMA子系统
+
+基于Xilinx XDMA v4.1 IP核配置：
+- PCIe Gen2 x2链路宽度
+- 支持AXI-Stream 64bit数据位宽
+- 支持Scatter-Gather DMA
+- 最大理论带宽：1GB/s（单向）
+
+## 开发环境
+
+### 工具版本
+- **Vivado**: 2019.2
+- **芯片型号**: xc7vx690tffg1761-2 (Virtex-7)
+- **仿真工具**: Xilinx XSim / ModelSim
+
+### 时钟配置
+- 系统时钟: 50MHz
+- 以太网GMII时钟: 125MHz
+- IDELAY参考时钟: 200MHz
+- PCIe核心时钟: 125MHz
+
+## 快速开始
+
+### 1. 工程编译
+
+```bash
+# 打开Vivado工程
+start pcie_test_4.xpr
+
+# 在Vivado Tcl控制台执行
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 8
+```
+
+### 2. 下载调试
+
+1. 连接JTAG下载器到FPGA开发板
+2. 打开Hardware Manager
+3. 连接目标设备
+4. 下载比特流文件到FPGA
