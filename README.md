@@ -56,7 +56,6 @@ cd trafficd
 # go build -o trafficd .
 ```
 
-> 💡 项目核心模块已完成，入口程序 `main.go` 正在开发中
 
 ### 数据库初始化
 
