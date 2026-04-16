@@ -1,7 +1,6 @@
 #高速网络流量监测系统
 
-![Go Version](https://img.shields.io/badge/Go-1.23+-00ADD8?style=flat&logo=go)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 
 基于 Go 语言开发的高性能网络流量实时分析与监控平台，支持分钟级流量聚合、Heavy Hitter 检测、端口扫描行为识别，提供现代化的 Web 可视化监控面板。
 
