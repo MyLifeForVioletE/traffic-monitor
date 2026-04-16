@@ -1,7 +1,5 @@
 #高速网络流量监测系统
 
-
-
 基于 Go 语言开发的高性能网络流量实时分析与监控平台，支持分钟级流量聚合、Heavy Hitter 检测、端口扫描行为识别，提供现代化的 Web 可视化监控面板。
 
 ## ✨ 功能特性
@@ -43,17 +41,9 @@
 - Go 1.23+
 - MySQL 8.0+
 - Redis 6.0+
-- Kafka 2.8+ (可选)
+- Kafka 2.8+ 
 - Windows: Npcap / Linux: libpcap
 
-### 编译安装
-
-```bash
-git clone https://github.com/yourusername/trafficd.git
-cd trafficd
-# 待 main 入口完善后执行编译
-# go build -o trafficd .
-```
 
 
 ### 数据库初始化
@@ -67,28 +57,10 @@ mysql -u root -p < migrations/schema.sql
 创建 `config.yaml`:
 
 ```yaml
-probe_id: "probe-01"
-
-ingest:
-  mode: "pcap"           # synthetic | pcap | live
-  pcap_path: "./sample.pcap"
-  synthetic_rps: 10000
-  workers: 4
-  batch_size: 1000
-  live_iface: "以太网"    # Windows 网卡名称
-  live_bpf: "tcp or udp"  # BPF 过滤规则
 
 kafka:
   brokers: ["localhost:9092"]
-  topic_records: "traffic_records"
-  consumer_group: "trafficd_agg"
-
-aggregator:
-  shard_count: 8
-  window_seconds: 10
-  top_k: 100
-  spread_top_sources: 50
-
+  
 mysql:
   dsn: "root:password@tcp(127.0.0.1:3306)/trafficd?charset=utf8mb4&parseTime=True"
 
