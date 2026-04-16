@@ -49,7 +49,6 @@ CREATE TABLE IF NOT EXISTS agg_src_second (
     probe_id                    VARCHAR(64)  NOT NULL,
     src_ip                      VARCHAR(45)  NOT NULL,
     flow_size                   BIGINT UNSIGNED NOT NULL DEFAULT 0,
-    dst_port_cardinality_est    DOUBLE NOT NULL,
     PRIMARY KEY (sec_ts, probe_id, src_ip),
     KEY idx_probe_time (probe_id, sec_ts)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

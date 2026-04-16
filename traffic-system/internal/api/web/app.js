@@ -128,11 +128,7 @@ function updateStartButton() {
   }
 }
 
-function riskBadge(flowSize, dstPortEst) {
-  if (flowSize >= 200000 || dstPortEst >= 1000) return { cls: "danger", text: "疑似攻击" };
-  if (flowSize >= 60000 || dstPortEst >= 300 || (flowSize >= 20000 && dstPortEst >= 100)) return { cls: "warn", text: "需关注" };
-  return { cls: "ok", text: "正常" };
-}
+
 
 function getIfaceLabel(iface) {
   return iface && iface.description ? iface.description : iface && iface.name ? iface.name : '-';
@@ -274,7 +270,7 @@ function buildSecondSeries(points) {
   const series = Array.from({ length: 60 }, (_, i) => ({
     sec_ts: `${String(i).padStart(2, '0')}s`,
     flow_size: i <= currentSec ? 0 : null,
-    dst_port_cardinality_est: i <= currentSec ? 0 : null,
+    flow_cardinality: i <= currentSec ? 0 : null,
   }));
 
   (points || []).forEach(p => {
@@ -284,7 +280,7 @@ function buildSecondSeries(points) {
       series[sec] = {
         sec_ts: `${String(sec).padStart(2, '0')}s`,
         flow_size: p.flow_size != null ? p.flow_size : 0,
-        dst_port_cardinality_est: p.dst_port_cardinality_est != null ? p.dst_port_cardinality_est : 0,
+        flow_cardinality: p.flow_cardinality || p.dst_port_cardinality_est || 0,
       };
     }
   });
@@ -294,7 +290,7 @@ function buildSecondSeries(points) {
 function setTrendOption(chart, points, isMinute = false) {
   const times = points.map(p => formatTimeLabel(p.sec_ts, isMinute));
   const fs = points.map(p => p.flow_size);
-  const dp = points.map(p => p.dst_port_cardinality_est);
+  const dp = points.map(p => p.flow_cardinality || p.dst_cardinality_est || 0);
   const option = {
     tooltip: { trigger: 'axis' },
     legend: { top: 0, data: ['流大小', '流基数'] },
@@ -347,14 +343,19 @@ function renderTopTable(tableId, data, timeStr, topN) {
     const tr = document.createElement("tr");
     const isActive = (tableId === 'topSrc1min' ? selectedSrcCurrent : selectedSrcHistory) === row.src_ip;
     if (isActive) tr.classList.add("active");
-    const badge = riskBadge(row.total_flow_size, row.dst_port_cardinality_est);
+    const flowSize = row.total_flow_size || row.flow_size || 0;
+    const cardEst = row.flow_cardinality || row.dst_cardinality_est || 0;
+    const avgPerPort = cardEst > 0 ? (flowSize / cardEst) : 0;
+    let status = '正常';
+    if (avgPerPort < 1.5 && flowSize > 100) status = '<span style="color:#f59e0b">可疑</span>';
+    if (avgPerPort < 1.1 && flowSize > 500) status = '<span style="color:#ef4444">异常</span>';
     tr.innerHTML = `
       <td class="num">${idx + 1}</td>
       <td>${row.src_ip}</td>
       <td>${timeStr}</td>
-      <td class="num">${fmt(row.dst_port_cardinality_est)}</td>
-      <td class="num">${fmt(row.total_flow_size)}</td>
-      <td><span class="badge ${badge.cls}">${badge.text}</span></td>
+      <td class="num">${fmt(flowSize)}</td>
+      <td class="num">${fmt(cardEst)}</td>
+      <td>${status}</td>
     `;
     tr.style.cursor = "pointer";
     tr.addEventListener("click", async () => {

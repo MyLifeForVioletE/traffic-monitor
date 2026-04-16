@@ -10,7 +10,16 @@ import (
 	"trafficd/internal/model"
 )
 
-// RunSynthetic 生成合成 IPv4/TCP 流。按固定节拍批量下发，避免过高 RPS 下过小的 ticker 间隔。
+// RunSynthetic 生成合成 IPv4/TCP 流
+// 按固定节拍批量下发，避免过高 RPS 下过小的 ticker 间隔
+// 参数：
+//   - ctx: 上下文
+//   - rps: 每秒请求数
+//   - batchSize: 批处理大小
+//   - sink: 数据发布函数
+//
+// 返回：
+//   - error: 错误信息
 func RunSynthetic(ctx context.Context, rps int, batchSize int, sink func(context.Context, []model.PacketRecord) error) error {
 	if batchSize <= 0 {
 		batchSize = 2048
@@ -19,10 +28,12 @@ func RunSynthetic(ctx context.Context, rps int, batchSize int, sink func(context
 		rps = 10_000
 	}
 
+	// 使用加密随机数生成器初始化
 	var seed [8]byte
 	_, _ = crand.Read(seed[:])
 	rng := rand.New(rand.NewPCG(binary.NativeEndian.Uint64(seed[:]), 0x9e3779b97f4a7c15))
 
+	// 每 10 毫秒触发一次
 	tick := 10 * time.Millisecond
 	perTick := rps * int(tick) / int(time.Second)
 	if perTick < 1 {
@@ -53,7 +64,14 @@ func RunSynthetic(ctx context.Context, rps int, batchSize int, sink func(context
 	}
 }
 
+// randomRecord 生成随机包记录
+// 参数：
+//   - rng: 随机数生成器
+//
+// 返回：
+//   - model.PacketRecord: 包记录
 func randomRecord(rng *rand.Rand) model.PacketRecord {
+	// 生成随机 IP 地址
 	a := byte(rng.IntN(50))
 	if rng.IntN(100) < 30 {
 		a = 10
@@ -63,13 +81,15 @@ func randomRecord(rng *rand.Rand) model.PacketRecord {
 	d := byte(rng.IntN(256))
 	e := byte(rng.IntN(256))
 
+	// 创建五元组
 	var fk model.FlowKey
-	fk.SrcIP = model.IPv4Key(192, 168, a, b)
-	fk.DstIP = model.IPv4Key(10, c, d, e)
+	fk.SrcIP = model.IPv4Key(192, 168, a, b) // 192.168.x.x
+	fk.DstIP = model.IPv4Key(10, c, d, e)    // 10.x.x.x
 	fk.SrcPort = uint16(1024 + rng.IntN(60000))
-	fk.DstPort = uint16([]uint16{80, 443, 53, 8080}[rng.IntN(4)])
-	fk.Proto = 6
+	fk.DstPort = uint16(1 + rng.IntN(65534))
+	fk.Proto = 6 // TCP
 
+	// 生成随机包长度
 	ln := 64 + rng.IntN(1400)
 	return model.PacketRecord{
 		TsNanos: time.Now().UnixNano(),

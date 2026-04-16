@@ -1,58 +1,77 @@
 package aggregator
 
 import (
-	"encoding/binary"
 	"sync"
-
-	"github.com/axiomhq/hyperloglog"
 
 	"trafficd/internal/model"
 )
 
+// shard 分片结构体
+// 用于并行聚合数据包记录
 type shard struct {
-	mu sync.Mutex
+	mu sync.Mutex // 互斥锁，保护共享数据
 
-	// 流大小：按 src 计包数（每包 +1）
+	// pktsBySrc 源 IP -> 包计数
 	pktsBySrc map[[16]byte]uint64
-
-	// 流基数：按 src 对 dst port 做 distinct 估计（HLL，元素为 2 字节 port）
-	hllBySrc map[[16]byte]*hyperloglog.Sketch
+	// dstPortsBySrc 源 IP -> 目的端口集合（用于计算目的端口基数）
+	dstPortsBySrc map[[16]byte]map[uint16]struct{}
 }
 
+// newShard 创建新的分片实例
+// 返回：
+//   - *shard: 分片实例
 func newShard() *shard {
 	return &shard{
-		pktsBySrc: make(map[[16]byte]uint64),
-		hllBySrc:  make(map[[16]byte]*hyperloglog.Sketch),
+		pktsBySrc:     make(map[[16]byte]uint64),
+		dstPortsBySrc: make(map[[16]byte]map[uint16]struct{}),
 	}
 }
 
+// ingest 摄入单个数据包记录
+// 参数：
+//   - rec: 数据包记录
 func (s *shard) ingest(rec model.PacketRecord) {
-	src := rec.Flow.SrcIP
+	src := rec.Flow.SrcIP       // 源 IP
+	dstPort := rec.Flow.DstPort // 目的端口
 
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
+	// 增加源 IP 的包计数
 	s.pktsBySrc[src]++
 
-	sk := s.hllBySrc[src]
-	if sk == nil {
-		sk = hyperloglog.New14()
-		s.hllBySrc[src] = sk
+	// 记录目的端口（用于计算目的端口基数）
+	ports, ok := s.dstPortsBySrc[src]
+	if !ok {
+		ports = make(map[uint16]struct{})
+		s.dstPortsBySrc[src] = ports
 	}
-	var portLE [2]byte
-	binary.LittleEndian.PutUint16(portLE[:], rec.Flow.DstPort)
-	sk.Insert(portLE[:])
+	ports[dstPort] = struct{}{}
 }
 
-func (s *shard) snapshotAndReset() (map[[16]byte]uint64, map[[16]byte]*hyperloglog.Sketch) {
+// srcStats 源流统计信息
+type srcStats struct {
+	pktCount uint64              // 包计数
+	dstPorts map[uint16]struct{} // 目的端口集合
+}
+
+// snapshotAndReset 快照并重置
+// 将当前分片的数据生成快照，并重置分片状态
+// 返回：
+//   - map[[16]byte]srcStats: 源 IP -> 统计信息
+func (s *shard) snapshotAndReset() map[[16]byte]srcStats {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	p := s.pktsBySrc
-	h := s.hllBySrc
-
+	p := make(map[[16]byte]srcStats, len(s.pktsBySrc))
+	for src, cnt := range s.pktsBySrc {
+		p[src] = srcStats{
+			pktCount: cnt,
+			dstPorts: s.dstPortsBySrc[src],
+		}
+	}
+	// 重置分片状态
 	s.pktsBySrc = make(map[[16]byte]uint64)
-	s.hllBySrc = make(map[[16]byte]*hyperloglog.Sketch)
-
-	return p, h
+	s.dstPortsBySrc = make(map[[16]byte]map[uint16]struct{})
+	return p
 }

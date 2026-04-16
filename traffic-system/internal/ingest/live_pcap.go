@@ -17,8 +17,21 @@ import (
 	"trafficd/internal/model"
 )
 
-// RunLive 实时抓包并输出 PacketRecord 批次。
-// 需要 Npcap + Windows cgo（libpcap）。
+// RunLive 实时抓包并输出 PacketRecord 批次
+// 需要 Npcap + Windows cgo（libpcap）
+// 参数：
+//   - ctx: 上下文
+//   - iface: 网卡名称
+//   - ifaceCh: 网卡选择通道
+//   - promiscuous: 是否混杂模式
+//   - snapshotLen: 快照长度
+//   - readTimeout: 读取超时
+//   - bpf: BPF 过滤器
+//   - batchSize: 批处理大小
+//   - sink: 数据发布函数
+//
+// 返回：
+//   - error: 错误��息
 func RunLive(
 	ctx context.Context,
 	iface string,
@@ -30,6 +43,7 @@ func RunLive(
 	batchSize int,
 	sink func(context.Context, []model.PacketRecord) error,
 ) error {
+	// 设置默认参数
 	if snapshotLen <= 0 {
 		snapshotLen = 1600
 	}
@@ -40,6 +54,7 @@ func RunLive(
 		readTimeout = 1000 * time.Millisecond
 	}
 
+	// 打开网卡句柄
 	openHandle := func(currentIface string) (*pcap.Handle, *gopacket.PacketSource, error) {
 		handle, err := pcap.OpenLive(currentIface, int32(snapshotLen), promiscuous, readTimeout)
 		if err != nil {
@@ -56,6 +71,7 @@ func RunLive(
 		return handle, src, nil
 	}
 
+	// 等待下一个网卡选择
 	waitNextIface := func() (string, error) {
 		if ifaceCh == nil {
 			return "", fmt.Errorf("live iface required")
@@ -78,6 +94,7 @@ func RunLive(
 		}
 	}
 
+	// 等待初始网卡
 	currentIface := strings.TrimSpace(iface)
 	for currentIface == "" {
 		next, waitErr := waitNextIface()
@@ -87,6 +104,7 @@ func RunLive(
 		currentIface = next
 	}
 
+	// 打开初始网卡
 	var (
 		handle *pcap.Handle
 		src    *gopacket.PacketSource
@@ -105,9 +123,11 @@ func RunLive(
 	}
 	defer handle.Close()
 
+	// 创建批处理缓冲区
 	batch := make([]model.PacketRecord, 0, batchSize)
 	var pktCount, parsedCount uint64
 
+	// flush 刷新批处理数据到 sink
 	flush := func() error {
 		if len(batch) == 0 {
 			return nil
@@ -118,6 +138,7 @@ func RunLive(
 		return sink(ctx, cp)
 	}
 
+	// 定期刷新
 	flushInterval := time.NewTicker(500 * time.Millisecond)
 	defer flushInterval.Stop()
 
@@ -146,6 +167,7 @@ func RunLive(
 			if newIface == currentIface {
 				continue
 			}
+			// 切换网卡
 			newHandle, newSrc, openErr := openHandle(newIface)
 			if openErr != nil {
 				slog.Warn("failed to open interface", "iface", newIface, "err", openErr)
@@ -181,11 +203,20 @@ func RunLive(
 	}
 }
 
+// packetToRecord 将 gopacket 包转换为 PacketRecord
+// 参数：
+//   - pkt: gopacket 包
+//
+// 返回：
+//   - model.PacketRecord: 包记录
+//   - bool: 是否成功
 func packetToRecord(pkt gopacket.Packet) (model.PacketRecord, bool) {
+	// 解析 IPv4
 	if layer := pkt.Layer(layers.LayerTypeIPv4); layer != nil {
 		ip4 := layer.(*layers.IPv4)
 		return flowFromL4(pkt, ip4.SrcIP, ip4.DstIP)
 	}
+	// 解析 IPv6
 	if layer := pkt.Layer(layers.LayerTypeIPv6); layer != nil {
 		ip6 := layer.(*layers.IPv6)
 		return flowFromL4(pkt, ip6.SrcIP, ip6.DstIP)
@@ -193,15 +224,26 @@ func packetToRecord(pkt gopacket.Packet) (model.PacketRecord, bool) {
 	return model.PacketRecord{}, false
 }
 
+// flowFromL4 从传输层提取流信息
+// 参数：
+//   - pkt: gopacket 包
+//   - sip: 源 IP
+//   - dip: 目的 IP
+//
+// 返回：
+//   - model.PacketRecord: 包记录
+//   - bool: 是否成功
 func flowFromL4(pkt gopacket.Packet, sip, dip net.IP) (model.PacketRecord, bool) {
 	var proto uint8
 	var sport, dport uint16
+	// 解析 TCP
 	if tcpLayer := pkt.Layer(layers.LayerTypeTCP); tcpLayer != nil {
 		tcp, _ := tcpLayer.(*layers.TCP)
 		proto = uint8(layers.IPProtocolTCP)
 		sport = uint16(tcp.SrcPort)
 		dport = uint16(tcp.DstPort)
 	} else if udpLayer := pkt.Layer(layers.LayerTypeUDP); udpLayer != nil {
+		// 解析 UDP
 		udp, _ := udpLayer.(*layers.UDP)
 		proto = uint8(layers.IPProtocolUDP)
 		sport = uint16(udp.SrcPort)
@@ -210,17 +252,20 @@ func flowFromL4(pkt gopacket.Packet, sip, dip net.IP) (model.PacketRecord, bool)
 		return model.PacketRecord{}, false
 	}
 
+	// 转换为 16 字节 IP 地址
 	s16 := sip.To16()
 	d16 := dip.To16()
 	if s16 == nil || d16 == nil {
 		return model.PacketRecord{}, false
 	}
+	// 构建五元组
 	var fk model.FlowKey
 	copy(fk.SrcIP[:], s16)
 	copy(fk.DstIP[:], d16)
 	fk.SrcPort = sport
 	fk.DstPort = dport
 	fk.Proto = proto
+	// 获取时间戳
 	ts := pkt.Metadata().Timestamp
 	return model.PacketRecord{
 		TsNanos: ts.UnixNano(),
