@@ -44,17 +44,8 @@
 - Kafka 2.8+ 
 - Windows: Npcap / Linux: libpcap
 
-
-
-### 数据库初始化
-
-```bash
-mysql -u root -p < migrations/schema.sql
-```
-
 ### 配置文件
-
-创建 `config.yaml`:
+ `config.yaml`:
 
 ```yaml
 
@@ -72,14 +63,6 @@ redis:
 http:
   addr: ":8080"
 ```
-
-### 启动服务
-
-```bash
-./trafficd -config config.yaml
-```
-
-访问 `http://localhost:8080` 即可打开监控面板。
 
 ## 📊 监控面板
 
