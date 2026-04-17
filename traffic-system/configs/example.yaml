@@ -1,0 +1,40 @@
+probe_id: "probe-01"
+
+ingest:
+  mode: "synthetic"
+  synthetic_rps: 5000
+  workers: 2
+  batch_size: 1000
+
+  live_iface: ""
+  live_promiscuous: true
+  live_snapshot_len: 1600
+  live_read_timeout_ms: 1000
+  live_bpf: "(ip or ip6) and (tcp or udp)"
+
+  pcap_path: "./sample.pcap"
+
+http:
+  addr: ":8080"
+  auto_open_browser: true
+
+aggregator:
+  shard_count: 8
+  window_seconds: 1
+  top_k: 100
+  spread_top_sources: 50
+  flush_workers: 4
+  max_src_entries: 5000
+
+kafka:
+  brokers: []
+  topic_records: "traffic_records"
+  consumer_group: "trafficd_agg"
+
+mysql:
+  dsn: "root:violet14@tcp(127.0.0.1:3306)/trafficd?charset=utf8mb4&parseTime=True&interpolateParams=true"
+
+redis:
+  addr: ""
+  password: ""
+  db: 0
